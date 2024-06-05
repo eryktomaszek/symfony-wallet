@@ -27,8 +27,8 @@
             {% for wallet in pagination.items %}
                 <tr>
                     <td>{{ wallet.id }}</td>
-                    <td>{{ wallet.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ wallet.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ wallet.createdAt|format_date('long') }}</td>
+                    <td>{{ wallet.updatedAt|format_date('long') }}</td>
                     <td>{{ wallet.title }}</td>
                     <td>{{ wallet.balance }}</td>
                     <td>
