@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.transaction_view'|trans({'%id%': transaction.id}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.transaction_view'|trans({'%id%': transaction.id}) }}</h1>
+    {% if transaction is defined %}
+        <dl>
+            <dt>{{ 'label.date'|trans }}</dt>
+            <dd>{{ transaction.date|format_date('long') }}</dd>
+            <dt>{{ 'label.amount'|trans }}</dt>
+            <dd>{{ transaction.amount }}</dd>
+            <dt>{{ 'label.type'|trans }}</dt>
+            <dd>{{ transaction.type }}</dd>
+            <dt>{{ 'label.description'|trans }}</dt>
+            <dd>{{ transaction.description }}</dd>
+            <dt>{{ 'label.wallet'|trans }}</dt>
+            <dd>{{ transaction.wallet.title }}</dd>
+            <dt>{{ 'label.category'|trans }}</dt>
+            <dd>{{ transaction.category.name }}</dd>
+        </dl>
+        <p>
+            <a href="{{ path('transaction_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message.transaction_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

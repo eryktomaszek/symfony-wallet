@@ -18,8 +18,10 @@ class CategoryFixtures extends AbstractBaseFixtures
             $category = new Category();
             $category->setName($this->faker->word);
             $category->setDescription($this->faker->text(200));
-            $this->manager->persist($category);
+            $category->setCreatedAt($this->faker->dateTimeThisDecade);
+            $category->setUpdatedAt($this->faker->dateTimeThisDecade);
 
+            $this->manager->persist($category);
             $this->addReference('category_' . $i, $category);
         }
 
