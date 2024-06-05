@@ -20,8 +20,7 @@ class WalletController extends AbstractController
     /**
      * Index action.
      *
-     * @param Request $request HTTP Request
-     * @param WalletRepository $repository Wallet repository
+     * @param WalletRepository $walletRepository Wallet repository
      * @param PaginatorInterface $paginator Paginator
      *
      * @return Response HTTP response
@@ -30,11 +29,11 @@ class WalletController extends AbstractController
         name: 'wallet_index',
         methods: 'GET'
     )]
-    public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
+    public function index(WalletRepository $walletRepository, PaginatorInterface $paginator, #[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $paginator->paginate(
             $walletRepository->queryAll(),
-            $request->query->getInt('page', 1),
+            $page,
             WalletRepository::PAGINATOR_ITEMS_PER_PAGE
         );
 
