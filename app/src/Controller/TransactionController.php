@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Transaction;
-use App\Repository\TransactionRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\TransactionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,24 +17,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class TransactionController extends AbstractController
 {
     /**
+     * Constructor.
+     *
+     * @param TransactionServiceInterface $transactionService Transaction service
+     */
+    public function __construct(private readonly TransactionServiceInterface $transactionService)
+    {
+    }
+
+    /**
      * Index action.
      *
-     * @param TransactionRepository $transactionRepository Transaction repository
-     * @param PaginatorInterface $paginator Paginator
      * @param Request $request HTTP Request
      *
      * @return Response HTTP response
      */
-    #[Route(
-        name: 'transaction_index',
-        methods: 'GET'
-    )]
-    public function index(TransactionRepository $transactionRepository, PaginatorInterface $paginator, Request $request): Response
+    #[Route(name: 'transaction_index', methods: 'GET')]
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $transactionRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            TransactionRepository::PAGINATOR_ITEMS_PER_PAGE
+        $pagination = $this->transactionService->getPaginatedList(
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('transaction/index.html.twig', ['pagination' => $pagination]);
