@@ -55,4 +55,34 @@ class WalletRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('wallet');
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Wallet $entity Wallet entity
+     * @param bool $flush Whether to flush changes to the database
+     */
+    public function save(Wallet $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Remove entity.
+     *
+     * @param Wallet $entity Wallet entity
+     * @param bool $flush Whether to flush changes to the database
+     */
+    public function remove(Wallet $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

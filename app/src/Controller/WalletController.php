@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Wallet;
+use App\Form\Type\WalletType;
 use App\Service\WalletServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,5 +59,75 @@ class WalletController extends AbstractController
     public function show(Wallet $wallet): Response
     {
         return $this->render('wallet/show.html.twig', ['wallet' => $wallet]);
+    }
+
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/create', name: 'wallet_create', methods: 'GET|POST')]
+    public function create(Request $request): Response
+    {
+        $wallet = new Wallet();
+        $form = $this->createForm(WalletType::class, $wallet);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->walletService->save($wallet);
+
+            return $this->redirectToRoute('wallet_index');
+        }
+
+        return $this->render('wallet/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Wallet $wallet Wallet entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'wallet_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[ParamConverter('wallet', class: 'App\Entity\Wallet')]
+    public function edit(Request $request, Wallet $wallet): Response
+    {
+        $form = $this->createForm(WalletType::class, $wallet);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->walletService->save($wallet);
+
+            return $this->redirectToRoute('wallet_index');
+        }
+
+        return $this->render('wallet/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Wallet $wallet Wallet entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'wallet_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
+    #[ParamConverter('wallet', class: 'App\Entity\Wallet')]
+    public function delete(Request $request, Wallet $wallet): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$wallet->getId(), $request->request->get('_token'))) {
+            $this->walletService->delete($wallet);
+        }
+
+        return $this->redirectToRoute('wallet_index');
     }
 }

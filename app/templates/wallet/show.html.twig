@@ -1,36 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.wallet_view'|trans({'%id%': wallet.id|default('')}) }}
+    Wallet View {{ wallet.id }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.wallet_view'|trans({'%id%': wallet.id}) }}</h1>
+    <h1>Wallet View {{ wallet.id }}</h1>
     {% if wallet is defined %}
         <dl class="dl-horizontal">
-            <dt>{{ 'label.id'|trans }}</dt>
+            <dt>ID</dt>
             <dd>{{ wallet.id }}</dd>
-            <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ wallet.createdAt|date('Y/m/d') }}</dd>
-            <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ wallet.updatedAt|date('Y/m/d') }}</dd>
-            <dt>{{ 'label.title'|trans }}</dt>
+            <dt>Title</dt>
             <dd>{{ wallet.title }}</dd>
-            <dt>{{ 'label.description'|trans }}</dt>
+            <dt>Description</dt>
             <dd>{{ wallet.description }}</dd>
-            <dt>{{ 'label.tags'|trans }}</dt>
-            <dd>{{ wallet.tags }}</dd>
-            <dt>{{ 'label.balance'|trans }}</dt>
+            <dt>Balance</dt>
             <dd>{{ wallet.balance }}</dd>
+            <dt>Tags</dt>
+            <dd>{{ wallet.tags }}</dd>
+            <dt>Created At</dt>
+            <dd>{{ wallet.createdAt|date('Y/m/d H:i:s') }}</dd>
+            <dt>Updated At</dt>
+            <dd>{{ wallet.updatedAt|date('Y/m/d H:i:s') }}</dd>
         </dl>
         <p>
-            <a href="{{ path('wallet_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
+            <a href="{{ path('wallet_index') }}" title="Back to list">
+                Back to list
             </a>
         </p>
     {% else %}
         <p>
-            {{ 'message.wallet_not_found'|trans }}
+            Wallet not found.
         </p>
     {% endif %}
 {% endblock %}

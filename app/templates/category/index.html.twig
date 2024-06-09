@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category List{% endblock %}
+{% block title %}{{ 'title.category_list'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Category List</h1>
+    <h1>{{ 'title.category_list'|trans }}</h1>
 
-    <a href="{{ path('category_create') }}" class="btn btn-primary mb-3">Create new Category</a>
+    <a href="{{ path('category_create') }}" class="btn btn-primary mb-3">{{ 'title.create_category'|trans }}</a>
 
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Actions</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.name'|trans, 'category.name') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'category.description') }}</th>
+            <th scope="col">{{ 'label.actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -23,11 +23,11 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-info btn-sm">Show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
                     <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" style="display:inline-block;">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
-                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
                     </form>
                 </td>
             </tr>

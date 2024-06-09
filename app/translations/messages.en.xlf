@@ -82,9 +82,33 @@
         <source>title.category_view</source>
         <target>Category View #%id%</target>
       </trans-unit>
+      <trans-unit id="title.create_wallet">
+        <source>title.create_wallet</source>
+        <target>Create Wallet</target>
+      </trans-unit>
+      <trans-unit id="title.edit_wallet">
+        <source>title.edit_wallet</source>
+        <target>Edit Wallet</target>
+      </trans-unit>
+      <trans-unit id="title.create_category">
+        <source>title.create_category</source>
+        <target>Create Category</target>
+      </trans-unit>
+      <trans-unit id="title.edit_category">
+        <source>title.edit_category</source>
+        <target>Edit Category</target>
+      </trans-unit>
       <trans-unit id="action.view">
         <source>action.view</source>
         <target>View</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
       </trans-unit>
       <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>
