@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,5 +53,75 @@ class CategoryController extends AbstractController
     public function show(Category $category): Response
     {
         return $this->render('category/show.html.twig', ['category' => $category]);
+    }
+
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/create', name: 'category_create', methods: 'GET|POST')]
+    public function create(Request $request): Response
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->save($category);
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render('category/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[ParamConverter('category', class: 'App\Entity\Category')]
+    public function edit(Request $request, Category $category): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->save($category);
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render('category/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
+    #[ParamConverter('category', class: 'App\Entity\Category')]
+    public function delete(Request $request, Category $category): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $this->categoryService->delete($category);
+        }
+
+        return $this->redirectToRoute('category_index');
     }
 }

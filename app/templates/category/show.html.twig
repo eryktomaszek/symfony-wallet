@@ -15,9 +15,9 @@
             <dt>{{ 'label.description'|trans }}</dt>
             <dd>{{ category.description }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ category.createdAt|date('Y/m/d') }}</dd>
+            <dd>{{ category.createdAt|date('Y/m/d H:i:s') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ category.updatedAt|date('Y/m/d') }}</dd>
+            <dd>{{ category.updatedAt|date('Y/m/d H:i:s') }}</dd>
         </dl>
         <p>
             <a href="{{ path('category_index') }}" title="{{ 'action.back_to_list'|trans }}">

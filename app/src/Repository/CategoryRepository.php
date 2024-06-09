@@ -39,4 +39,34 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('category');
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Category $entity Category entity
+     * @param bool $flush Whether to flush changes to the database
+     */
+    public function save(Category $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Remove entity.
+     *
+     * @param Category $entity Category entity
+     * @param bool $flush Whether to flush changes to the database
+     */
+    public function remove(Category $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

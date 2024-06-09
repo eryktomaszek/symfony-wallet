@@ -10,6 +10,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use DateTimeImmutable;
 
 /**
  * Class Category.
@@ -63,6 +64,15 @@ class Category
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
     /**
      * Getter for Id.

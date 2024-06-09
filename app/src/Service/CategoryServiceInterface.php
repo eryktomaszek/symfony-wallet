@@ -1,10 +1,8 @@
 <?php
-/**
- * Category service interface.
- */
 
 namespace App\Service;
 
+use App\Entity\Category;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -20,4 +18,18 @@ interface CategoryServiceInterface
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedList(int $page): PaginationInterface;
+
+    /**
+     * Save category.
+     *
+     * @param Category $category Category entity
+     */
+    public function save(Category $category): void;
+
+    /**
+     * Delete category.
+     *
+     * @param Category $category Category entity
+     */
+    public function delete(Category $category): void;
 }
