@@ -22,6 +22,14 @@
         <source>label.type</source>
         <target>Type</target>
       </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="label.tags">
+        <source>label.tags</source>
+        <target>Tags</target>
+      </trans-unit>
       <trans-unit id="label.description">
         <source>label.description</source>
         <target>Description</target>
@@ -34,6 +42,18 @@
         <source>label.category</source>
         <target>Category</target>
       </trans-unit>
+      <trans-unit id="label.created_at">
+        <source>label.created_at</source>
+        <target>Created At</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Updated At</target>
+      </trans-unit>
+      <trans-unit id="label.balance">
+        <source>label.balance</source>
+        <target>Balance</target>
+      </trans-unit>
       <trans-unit id="title.transaction_list">
         <source>title.transaction_list</source>
         <target>Transaction List</target>
@@ -41,6 +61,14 @@
       <trans-unit id="title.transaction_view">
         <source>title.transaction_view</source>
         <target>Transaction View #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_list">
+        <source>title.wallet_list</source>
+        <target>Wallet List</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_view">
+        <source>title.wallet_view</source>
+        <target>Wallet View #%id%</target>
       </trans-unit>
       <trans-unit id="action.view">
         <source>action.view</source>
@@ -57,6 +85,10 @@
       <trans-unit id="message.transaction_not_found">
         <source>message.transaction_not_found</source>
         <target>Transaction not found.</target>
+      </trans-unit>
+      <trans-unit id="message.wallet_not_found">
+        <source>message.wallet_not_found</source>
+        <target>Wallet not found.</target>
       </trans-unit>
     </body>
   </file>

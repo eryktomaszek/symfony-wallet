@@ -65,7 +65,7 @@ class Transaction
      *
      * @var Wallet|null
      */
-    #[ORM\ManyToOne(targetEntity: Wallet::class)]
+    #[ORM\ManyToOne(targetEntity: Wallet::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
 

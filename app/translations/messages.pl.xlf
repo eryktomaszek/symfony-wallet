@@ -34,6 +34,18 @@
         <source>label.category</source>
         <target>Kategoria</target>
       </trans-unit>
+      <trans-unit id="label.created_at">
+        <source>label.created_at</source>
+        <target>Utworzono</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Zaktualizowano</target>
+      </trans-unit>
+      <trans-unit id="label.balance">
+        <source>label.balance</source>
+        <target>Saldo</target>
+      </trans-unit>
       <trans-unit id="title.transaction_list">
         <source>title.transaction_list</source>
         <target>Lista transakcji</target>
@@ -41,6 +53,22 @@
       <trans-unit id="title.transaction_view">
         <source>title.transaction_view</source>
         <target>Widok transakcji #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_list">
+        <source>title.wallet_list</source>
+        <target>Lista portfeli</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_view">
+        <source>title.wallet_view</source>
+        <target>Widok portfela #%id%</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Nazwa</target>
+      </trans-unit>
+      <trans-unit id="label.tags">
+        <source>label.tags</source>
+        <target>Tagi</target>
       </trans-unit>
       <trans-unit id="action.view">
         <source>action.view</source>
@@ -57,6 +85,10 @@
       <trans-unit id="message.transaction_not_found">
         <source>message.transaction_not_found</source>
         <target>Transakcja nie znaleziona.</target>
+      </trans-unit>
+      <trans-unit id="message.wallet_not_found">
+        <source>message.wallet_not_found</source>
+        <target>Portfel nie znaleziony.</target>
       </trans-unit>
     </body>
   </file>

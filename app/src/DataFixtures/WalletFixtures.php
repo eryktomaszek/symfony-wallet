@@ -18,7 +18,7 @@ class WalletFixtures extends AbstractBaseFixtures
 
         for ($i = 0; $i < $walletCount; ++$i) {
             $wallet = new Wallet();
-            $wallet->setTitle($this->faker->sentence);
+            $wallet->setTitle($this->faker->word);
             $wallet->setDescription($this->faker->text(200));
             $wallet->setBalance($this->faker->randomFloat(2, 0, 10000));
             $wallet->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));

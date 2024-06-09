@@ -16,10 +16,12 @@
             <thead>
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'transaction.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.wallet'|trans, 'transaction.wallet') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.type'|trans, 'transaction.type') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'transaction.description') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -27,10 +29,12 @@
             {% for transaction in pagination.items %}
                 <tr>
                     <td>{{ transaction.id }}</td>
-                    <td>{{ transaction.date|format_date('long') }}</td>
-                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.wallet.title }}</td>
                     <td>{{ transaction.type }}</td>
                     <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.date|format_date('long') }}</td>
+                    <td>{{ transaction.category.name }}</td>
+                    <td>{{ transaction.amount }}</td>
                     <td>
                         <a href="{{ path('transaction_show', {id: transaction.id}) }}" title="{{ 'action.view'|trans }}">
                             {{ 'action.view'|trans }}

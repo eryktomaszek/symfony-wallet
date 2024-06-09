@@ -17,6 +17,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @psalm-suppress MissingConstructor
  */
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'categories')]
+#[ORM\UniqueConstraint(name: 'uq_categories_title', columns: ['name'])]
+#[UniqueEntity(fields: ['name'])]
 class Category
 {
     /**

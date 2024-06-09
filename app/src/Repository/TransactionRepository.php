@@ -31,7 +31,12 @@ class TransactionRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->orderBy('transaction.date', 'DESC');
+            ->select(
+                'partial transaction.{id, date, type, amount, description}',
+                'partial category.{id, name}'
+            )
+            ->join('transaction.category', 'category')
+            ->orderBy('transaction.id', 'ASC');
     }
 
     /**
