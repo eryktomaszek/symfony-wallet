@@ -16,7 +16,7 @@ class CategoryFixtures extends AbstractBaseFixtures
     {
         for ($i = 0; $i < 10; ++$i) {
             $category = new Category();
-            $category->setName($this->faker->word);
+            $category->setName($this->faker->unique()->word);
             $category->setDescription($this->faker->text(200));
             $category->setCreatedAt($this->faker->dateTimeThisDecade);
             $category->setUpdatedAt($this->faker->dateTimeThisDecade);

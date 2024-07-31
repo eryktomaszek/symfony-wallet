@@ -28,10 +28,10 @@
                 <td>{{ wallet.tags }}</td>
                 <td>
                     <a href="{{ path('wallet_show', {'id': wallet.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
-                    <a href="{{ path('wallet_edit', {'id': wallet.id}) }}" class="btn btn-warning btn-sm">{{ 'title.edit_wallet'|trans }}</a>
+                    <a href="{{ path('wallet_edit', {'id': wallet.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
                     <form method="post" action="{{ path('wallet_delete', {'id': wallet.id}) }}" style="display:inline-block;">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wallet.id) }}">
-                        <button class="btn btn-danger btn-sm" type="submit">{{ 'label.actions'|trans }}</button>
+                        <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
                     </form>
                 </td>
             </tr>
