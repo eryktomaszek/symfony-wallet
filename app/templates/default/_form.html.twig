@@ -19,12 +19,22 @@ parameters:
         {% include 'default/_single_alert_message.html.twig' with {
             type: 'danger',
             message: 'message.form_error'|trans,
-        }%}
+        } %}
     {% endif %}
-    {{ form_widget(form) }}
+
+    {# Iterate over each form field #}
+    {% for field in form %}
+        <div class="form-group{% if field.vars.required %} required{% endif %}">
+            {{ form_label(field) }}
+            {{ form_widget(field) }}
+            {{ form_errors(field) }}
+        </div>
+    {% endfor %}
+
     <div class="form-group row float-sm-right">
         <input type="submit" value="{{ submit_label }}" class="btn btn-primary"/>
     </div>
+
     {% if back_to_list_path|default(false) %}
         <div class="form-group row float-sm-left">
             <a href="{{ url(back_to_list_path) }}" class="btn btn-link">
@@ -32,5 +42,6 @@ parameters:
             </a>
         </div>
     {% endif %}
+
     {{ form_end(form) }}
 {% endblock %}

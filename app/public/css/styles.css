@@ -1,3 +1,11 @@
-p {
+/* Make form labels bold */
+form label {
+    font-weight: bold;
+}
+
+/* Add red asterisk to required fields */
+form .required label::after {
+    content: '*';
     color: red;
+    margin-left: 4px;
 }
