@@ -7,37 +7,43 @@
 
     <a href="{{ path('wallet_create') }}" class="btn btn-primary mb-3">{{ 'title.create_wallet'|trans }}</a>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'wallet.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'wallet.title') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'wallet.description') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.balance'|trans, 'wallet.balance') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'wallet.tags') }}</th>
-            <th scope="col">{{ 'label.actions'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for wallet in pagination %}
+    {% if pagination|length > 0 %}
+        <table class="table">
+            <thead>
             <tr>
-                <th scope="row">{{ wallet.id }}</th>
-                <td>{{ wallet.title }}</td>
-                <td>{{ wallet.description }}</td>
-                <td>{{ wallet.balance }}</td>
-                <td>{{ wallet.tags }}</td>
-                <td>
-                    <a href="{{ path('wallet_show', {'id': wallet.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
-                    <a href="{{ path('wallet_edit', {'id': wallet.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
-                    <form method="post" action="{{ path('wallet_delete', {'id': wallet.id}) }}" style="display:inline-block;">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wallet.id) }}">
-                        <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
-                    </form>
-                </td>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'wallet.id') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'wallet.title') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'wallet.description') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.balance'|trans, 'wallet.balance') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'wallet.tags') }}</th>
+                <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for wallet in pagination %}
+                <tr>
+                    <th scope="row">{{ wallet.id }}</th>
+                    <td>{{ wallet.title }}</td>
+                    <td>{{ wallet.description }}</td>
+                    <td>{{ wallet.balance }}</td>
+                    <td>{{ wallet.tags }}</td>
+                    <td>
+                        <a href="{{ path('wallet_show', {'id': wallet.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
+                        <a href="{{ path('wallet_edit', {'id': wallet.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
+                        <form method="post" action="{{ path('wallet_delete', {'id': wallet.id}) }}" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wallet.id) }}">
+                            <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            {{ 'message.empty_list'|trans }}
+        </div>
+    {% endif %}
 
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
