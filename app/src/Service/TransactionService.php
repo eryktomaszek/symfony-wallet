@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Transaction;
 use App\Repository\TransactionRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -43,4 +44,25 @@ class TransactionService implements TransactionServiceInterface
             self::PAGINATOR_ITEMS_PER_PAGE
         );
     }
+
+    /**
+     * Save transaction.
+     *
+     * @param Transaction $transaction Transaction entity
+     */
+    public function save(Transaction $transaction): void
+    {
+        $this->transactionRepository->save($transaction, true);
+    }
+
+    /**
+     * Delete transaction.
+     *
+     * @param Transaction $transaction Transaction entity
+     */
+    public function delete(Transaction $transaction): void
+    {
+        $this->transactionRepository->remove($transaction, true);
+    }
+
 }

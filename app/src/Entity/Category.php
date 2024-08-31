@@ -9,9 +9,8 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use DateTimeImmutable;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class Category.
@@ -26,8 +25,6 @@ class Category
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,16 +33,12 @@ class Category
 
     /**
      * Name.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $name = null;
 
     /**
      * Description.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $description = null;
@@ -69,7 +62,16 @@ class Category
     private ?\DateTimeInterface $updatedAt = null;
 
     /**
+     * Slug.
+     */
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private ?string $slug = null;
+
+    /**
      * Constructor.
+     *
+     * Initializes the createdAt and updatedAt fields.
      */
     public function __construct()
     {
@@ -101,8 +103,6 @@ class Category
      * Setter for name.
      *
      * @param string $name Name
-     *
-     * @return static
      */
     public function setName(string $name): static
     {
@@ -125,8 +125,6 @@ class Category
      * Setter for description.
      *
      * @param string|null $description Description
-     *
-     * @return static
      */
     public function setDescription(?string $description): static
     {
@@ -135,11 +133,21 @@ class Category
         return $this;
     }
 
+    /**
+     * Getter for createdAt.
+     *
+     * @return \DateTimeInterface|null Created at
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
+    /**
+     * Setter for createdAt.
+     *
+     * @param \DateTimeInterface $createdAt Created at
+     */
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
@@ -147,14 +155,46 @@ class Category
         return $this;
     }
 
+    /**
+     * Getter for updatedAt.
+     *
+     * @return \DateTimeInterface|null Updated at
+     */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
+    /**
+     * Setter for updatedAt.
+     *
+     * @param \DateTimeInterface $updatedAt Updated at
+     */
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Getter for slug.
+     *
+     * @return string|null Slug
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     */
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

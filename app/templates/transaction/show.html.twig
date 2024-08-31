@@ -22,13 +22,14 @@
             <dd>{{ transaction.category.name }}</dd>
         </dl>
         <p>
-            <a href="{{ path('transaction_index') }}" title="{{ 'action.back_to_list'|trans }}">
+            <a href="{{ path('transaction_index') }}" class="btn btn-secondary">
                 {{ 'action.back_to_list'|trans }}
             </a>
         </p>
     {% else %}
-        <p>
-            {{ 'message.transaction_not_found'|trans }}
-        </p>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.transaction_not_found'|trans
+        } %}
     {% endif %}
 {% endblock %}

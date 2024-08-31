@@ -6,29 +6,27 @@
 
 {% block body %}
     <h1>{{ 'title.transaction_list'|trans }}</h1>
-    {% if pagination is defined and pagination.items|length %}
 
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
+    <a href="{{ path('transaction_create') }}" class="btn btn-primary mb-3">{{ 'title.create_transaction'|trans }}</a>
 
-        <table class="table table-striped">
+    {% if pagination|length > 0 %}
+        <table class="table">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'transaction.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.wallet'|trans, 'transaction.wallet') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.type'|trans, 'transaction.type') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'transaction.description') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'transaction.id') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.wallet'|trans, 'transaction.wallet') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.type'|trans, 'transaction.type') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'transaction.description') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
+                <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for transaction in pagination.items %}
+            {% for transaction in pagination %}
                 <tr>
-                    <td>{{ transaction.id }}</td>
+                    <th scope="row">{{ transaction.id }}</th>
                     <td>{{ transaction.wallet.title }}</td>
                     <td>{{ transaction.type }}</td>
                     <td>{{ transaction.description }}</td>
@@ -36,22 +34,25 @@
                     <td>{{ transaction.category.name }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td>
-                        <a href="{{ path('transaction_show', {id: transaction.id}) }}" title="{{ 'action.view'|trans }}">
-                            {{ 'action.view'|trans }}
-                        </a>
+                        <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
+                        <a href="{{ path('transaction_edit', {'id': transaction.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
+                        <form method="post" action="{{ path('transaction_delete', {'id': transaction.id}) }}" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transaction.id) }}">
+                            <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-
     {% else %}
-        <p>
-            {{ 'message.empty_list'|trans }}
-        </p>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
     {% endif %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

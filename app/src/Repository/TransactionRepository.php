@@ -18,6 +18,7 @@ class TransactionRepository extends ServiceEntityRepository
      * @constant int
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Transaction::class);
@@ -37,6 +38,36 @@ class TransactionRepository extends ServiceEntityRepository
             )
             ->join('transaction.category', 'category')
             ->orderBy('transaction.id', 'ASC');
+    }
+
+    /**
+     * Save entity.
+     *
+     * @param Transaction $entity Transaction entity
+     * @param bool        $flush  Whether to flush changes to the database
+     */
+    public function save(Transaction $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Remove entity.
+     *
+     * @param Transaction $entity Transaction entity
+     * @param bool        $flush  Whether to flush changes to the database
+     */
+    public function remove(Transaction $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 
     /**
