@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\Wallet;
 use App\Form\Type\WalletType;
 use App\Service\WalletServiceInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class WalletController.
@@ -23,7 +24,7 @@ class WalletController extends AbstractController
      *
      * @param WalletServiceInterface $walletService Wallet service
      */
-    public function __construct(private readonly WalletServiceInterface $walletService)
+    public function __construct(private readonly WalletServiceInterface $walletService, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -78,6 +79,11 @@ class WalletController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->walletService->save($wallet);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
             return $this->redirectToRoute('wallet_index');
         }
 
@@ -90,7 +96,7 @@ class WalletController extends AbstractController
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Wallet $wallet Wallet entity
+     * @param Wallet  $wallet  Wallet entity
      *
      * @return Response HTTP response
      */
@@ -104,6 +110,11 @@ class WalletController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->walletService->save($wallet);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.updated_successfully')
+            );
+
             return $this->redirectToRoute('wallet_index');
         }
 
@@ -116,7 +127,7 @@ class WalletController extends AbstractController
      * Delete action.
      *
      * @param Request $request HTTP request
-     * @param Wallet $wallet Wallet entity
+     * @param Wallet  $wallet  Wallet entity
      *
      * @return Response HTTP response
      */
@@ -127,6 +138,11 @@ class WalletController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$wallet->getId(), $request->request->get('_token'))) {
             $this->walletService->delete($wallet);
         }
+
+        $this->addFlash(
+            'success',
+            $this->translator->trans('message.deleted_successfully')
+        );
 
         return $this->redirectToRoute('wallet_index');
     }

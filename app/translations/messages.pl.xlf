@@ -130,6 +130,19 @@
         <source>message.category_not_found</source>
         <target>Kategoria nie znaleziona.</target>
       </trans-unit>
+      <trans-unit id="message.created_successfully">
+          <source>message.created_successfully</source>
+          <target>Kategoria została pomyślnie utworzona.</target>
+      </trans-unit>
+      <trans-unit id="message.updated_successfully">
+          <source>message.updated_successfully</source>
+          <target>Kategoria została pomyślnie zaktualizowana.</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+          <source>message.deleted_successfully</source>
+          <target>Kategoria została pomyślnie usunięta.</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
