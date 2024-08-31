@@ -29,8 +29,9 @@
             </a>
         </p>
     {% else %}
-        <div class="alert alert-warning" role="alert">
-            {{ 'message.wallet_not_found'|trans }}
-        </div>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.wallet_not_found'|trans
+        } %}
     {% endif %}
 {% endblock %}

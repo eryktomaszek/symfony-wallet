@@ -20,13 +20,14 @@
             <dd>{{ category.updatedAt|date('Y/m/d H:i:s') }}</dd>
         </dl>
         <p>
-            <a href="{{ path('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
+            <a href="{{ path('category_index') }}" class="btn btn-secondary">
                 {{ 'action.back_to_list'|trans }}
             </a>
         </p>
     {% else %}
-        <p>
-            {{ 'message.category_not_found'|trans }}
-        </p>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.category_not_found'|trans
+        } %}
     {% endif %}
 {% endblock %}

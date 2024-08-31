@@ -1,14 +1,6 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Create Category{% endblock %}
-
-{% block body %}
-    <h1>Create Category</h1>
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">Create</button>
-    {{ form_end(form) }}
-
-    <a href="{{ path('category_index') }}" class="btn btn-secondary">Back to list</a>
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.category_create'|trans,
+    form: form,
+    submit_label: 'action.save'|trans,
+    back_to_list_path: 'category_index',
+} %}

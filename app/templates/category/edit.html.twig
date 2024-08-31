@@ -1,22 +1,6 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-    {{ 'title.category_edit'|trans({'%id%': category.id|default('')}) }}
-{% endblock %}
-
-{% block body %}
-    <h1>{{ 'title.category_edit'|trans({'%id%': category.id|default('')}) }}</h1>
-
-    {% if category is defined %}
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary">{{ 'action.save_changes'|trans }}</button>
-        {{ form_end(form) }}
-    {% else %}
-        <div class="alert alert-warning" role="alert">
-            {{ 'message.category_not_found'|trans }}
-        </div>
-    {% endif %}
-
-    <a href="{{ path('category_index') }}" class="btn btn-secondary">{{ 'action.back_to_list'|trans }}</a>
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.category_edit'|trans({'%id%': category.id|default('')}),
+    form: form,
+    submit_label: 'action.edit'|trans,
+    back_to_list_path: 'category_index',
+} %}
