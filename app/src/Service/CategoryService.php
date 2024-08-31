@@ -4,6 +4,9 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\TransactionRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -19,14 +22,18 @@ class CategoryService implements CategoryServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
+    private TransactionRepository $transactionRepository;
+
     /**
      * Constructor.
      *
-     * @param CategoryRepository $categoryRepository Category repository
-     * @param PaginatorInterface $paginator          Paginator
+     * @param CategoryRepository    $categoryRepository    Category repository
+     * @param PaginatorInterface    $paginator             Paginator
+     * @param TransactionRepository $transactionRepository Transaction repository
      */
-    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator)
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator, TransactionRepository $transactionRepository)
     {
+        $this->transactionRepository = $transactionRepository;
     }
 
     /**
@@ -63,5 +70,23 @@ class CategoryService implements CategoryServiceInterface
     public function delete(Category $category): void
     {
         $this->categoryRepository->remove($category, true);
+    }
+
+    /**
+     * Can Category be deleted?
+     *
+     * @param Category $category Category entity
+     *
+     * @return bool Result
+     */
+    public function canBeDeleted(Category $category): bool
+    {
+        try {
+            $result = $this->transactionRepository->countByCategory($category);
+
+            return 0 === $result;
+        } catch (NoResultException|NonUniqueResultException) {
+            return false;
+        }
     }
 }

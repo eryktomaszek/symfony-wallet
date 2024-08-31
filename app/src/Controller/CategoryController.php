@@ -129,14 +129,23 @@ class CategoryController extends AbstractController
     #[ParamConverter('category', class: 'App\Entity\Category')]
     public function delete(Request $request, Category $category): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $this->categoryService->delete($category);
+        if (!$this->categoryService->canBeDeleted($category)) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.category_contains_transactions')
+            );
+
+            return $this->redirectToRoute('category_index');
         }
 
-        $this->addFlash(
-            'success',
-            $this->translator->trans('message.deleted_successfully')
-        );
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $this->categoryService->delete($category);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+        }
 
         return $this->redirectToRoute('category_index');
     }

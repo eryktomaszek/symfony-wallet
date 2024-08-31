@@ -98,5 +98,157 @@ class Transaction
     #[Assert\NotNull(message: 'transaction.category.not_null')]
     private ?Category $category = null;
 
-    // Getter and Setter methods remain the same
+    /**
+     * Getter for Id.
+     *
+     * @return int|null Id
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Getter for amount.
+     *
+     * @return float|null Amount
+     */
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Setter for amount.
+     *
+     * @param float $amount Amount
+     *
+     * @return static
+     */
+    public function setAmount(float $amount): static
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Getter for description.
+     *
+     * @return string|null Description
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Setter for description.
+     *
+     * @param string $description Description
+     *
+     * @return static
+     */
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Getter for type.
+     *
+     * @return string|null Type
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Setter for type.
+     *
+     * @param string $type Type
+     *
+     * @return static
+     */
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Getter for date.
+     *
+     * @return \DateTimeInterface|null Date
+     */
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * Setter for date.
+     *
+     * @param \DateTimeInterface $date Date
+     *
+     * @return static
+     */
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Getter for wallet.
+     *
+     * @return Wallet|null Wallet
+     */
+    public function getWallet(): ?Wallet
+    {
+        return $this->wallet;
+    }
+
+    /**
+     * Setter for wallet.
+     *
+     * @param Wallet|null $wallet Wallet
+     *
+     * @return static
+     */
+    public function setWallet(?Wallet $wallet): static
+    {
+        $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    /**
+     * Getter for category.
+     *
+     * @return Category|null Category
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * Setter for category.
+     *
+     * @param Category|null $category Category
+     *
+     * @return static
+     */
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 }
