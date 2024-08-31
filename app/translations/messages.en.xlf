@@ -142,6 +142,110 @@
           <source>message.deleted_successfully</source>
           <target>Category deleted successfully.</target>
       </trans-unit>
+      <trans-unit id="category.name.unique">
+          <source>category.name.unique</source>
+          <target>The category name must be unique.</target>
+      </trans-unit>
+      <trans-unit id="category.name.type">
+          <source>category.name.type</source>
+          <target>The name must be a valid string.</target>
+      </trans-unit>
+      <trans-unit id="category.name.not_blank">
+          <source>category.name.not_blank</source>
+          <target>The category name should not be blank.</target>
+      </trans-unit>
+      <trans-unit id="category.name.min_length">
+          <source>category.name.min_length</source>
+          <target>The category name must be at least {{ limit }} characters long.</target>
+      </trans-unit>
+      <trans-unit id="category.name.max_length">
+          <source>category.name.max_length</source>
+          <target>The category name cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="category.description.type">
+          <source>category.description.type</source>
+          <target>The description must be a valid string.</target>
+      </trans-unit>
+      <trans-unit id="category.description.max_length">
+          <source>category.description.max_length</source>
+          <target>Description cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="category.created_at.type">
+          <source>category.created_at.type</source>
+          <target>The created date must be a valid date.</target>
+      </trans-unit>
+      <trans-unit id="category.updated_at.type">
+          <source>category.updated_at.type</source>
+          <target>The updated date must be a valid date.</target>
+      </trans-unit>
+      <trans-unit id="category.slug.type">
+          <source>category.slug.type</source>
+          <target>The slug must be a valid string.</target>
+      </trans-unit>
+      <trans-unit id="category.slug.min_length">
+          <source>category.slug.min_length</source>
+          <target>The slug must be at least {{ limit }} characters long.</target>
+      </trans-unit>
+      <trans-unit id="category.slug.max_length">
+          <source>category.slug.max_length</source>
+          <target>The slug cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="wallet.title.not_blank">
+          <source>wallet.title.not_blank</source>
+          <target>Wallet title should not be blank.</target>
+      </trans-unit>
+      <trans-unit id="wallet.title.min_length">
+          <source>wallet.title.min_length</source>
+          <target>Wallet title must be at least {{ limit }} characters long.</target>
+      </trans-unit>
+      <trans-unit id="wallet.title.max_length">
+          <source>wallet.title.max_length</source>
+          <target>Wallet title cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="wallet.description.max_length">
+          <source>wallet.description.max_length</source>
+          <target>Description cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="wallet.balance.not_null">
+          <source>wallet.balance.not_null</source>
+          <target>Wallet balance cannot be null.</target>
+      </trans-unit>
+      <trans-unit id="wallet.balance.type">
+          <source>wallet.balance.type</source>
+          <target>Wallet balance must be a number.</target>
+      </trans-unit>
+      <trans-unit id="wallet.balance.greater_than_or_equal">
+          <source>wallet.balance.greater_than_or_equal</source>
+          <target>Wallet balance must be greater than or equal to 0.</target>
+      </trans-unit>
+      <trans-unit id="wallet.created_at.type">
+          <source>wallet.created_at.type</source>
+          <target>Created At must be a valid date and time.</target>
+      </trans-unit>
+      <trans-unit id="wallet.updated_at.type">
+          <source>wallet.updated_at.type</source>
+          <target>Updated At must be a valid date and time.</target>
+      </trans-unit>
+      <trans-unit id="wallet.tags.type">
+          <source>wallet.tags.type</source>
+          <target>Tags must be a string.</target>
+      </trans-unit>
+      <trans-unit id="wallet.tags.max_length">
+          <source>wallet.tags.max_length</source>
+          <target>Tags cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="wallet.slug.type">
+          <source>wallet.slug.type</source>
+          <target>Slug must be a string.</target>
+      </trans-unit>
+      <trans-unit id="wallet.slug.min_length">
+          <source>wallet.slug.min_length</source>
+          <target>Slug must be at least {{ limit }} characters long.</target>
+      </trans-unit>
+      <trans-unit id="wallet.slug.max_length">
+          <source>wallet.slug.max_length</source>
+          <target>Slug cannot be longer than {{ limit }} characters.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

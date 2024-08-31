@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Category.
@@ -20,11 +21,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name: 'categories')]
 #[ORM\UniqueConstraint(name: 'uq_categories_title', columns: ['name'])]
-#[UniqueEntity(fields: ['name'])]
+#[UniqueEntity(fields: ['name'], message: 'category.name.unique')]
 class Category
 {
     /**
      * Primary key.
+     *
+     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,14 +36,31 @@ class Category
 
     /**
      * Name.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Type('string', message: 'category.name.type')]
+    #[Assert\NotBlank(message: 'category.name.not_blank')]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'category.name.min_length',
+        maxMessage: 'category.name.max_length'
+    )]
     private ?string $name = null;
 
     /**
      * Description.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Type('string', message: 'category.description.type')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'category.description.max_length'
+    )]
     private ?string $description = null;
 
     /**
@@ -49,6 +69,7 @@ class Category
      * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Type(\DateTimeImmutable::class, message: 'category.created_at.type')]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt = null;
 
@@ -58,13 +79,23 @@ class Category
      * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Type(\DateTimeImmutable::class, message: 'category.updated_at.type')]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updatedAt = null;
 
     /**
      * Slug.
+     *
+     * @var string|null
      */
     #[ORM\Column(length: 255)]
+    #[Assert\Type('string', message: 'category.slug.type')]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'category.slug.min_length',
+        maxMessage: 'category.slug.max_length'
+    )]
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
 

@@ -22,6 +22,7 @@ class TransactionController extends AbstractController
      * Constructor.
      *
      * @param TransactionServiceInterface $transactionService Transaction service
+     * @param TranslatorInterface         $translator         Translator
      */
     public function __construct(private readonly TransactionServiceInterface $transactionService, private readonly TranslatorInterface $translator)
     {
@@ -141,12 +142,17 @@ class TransactionController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$transaction->getId(), $request->request->get('_token'))) {
             $this->transactionService->delete($transaction);
-        }
 
-        $this->addFlash(
-            'success',
-            $this->translator->trans('message.deleted_successfully')
-        );
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+        } else {
+            $this->addFlash(
+                'error',
+                $this->translator->trans('message.delete_failed')
+            );
+        }
 
         return $this->redirectToRoute('transaction_index');
     }

@@ -142,7 +142,110 @@
           <source>message.deleted_successfully</source>
           <target>Kategoria została pomyślnie usunięta.</target>
       </trans-unit>
-
+    <trans-unit id="category.name.unique">
+        <source>category.name.unique</source>
+        <target>Nazwa kategorii musi być unikalna.</target>
+    </trans-unit>
+    <trans-unit id="category.name.type">
+        <source>category.name.type</source>
+        <target>Nazwa musi być poprawnym ciągiem znaków.</target>
+    </trans-unit>
+    <trans-unit id="category.name.not_blank">
+        <source>category.name.not_blank</source>
+        <target>Nazwa kategorii nie może być pusta.</target>
+    </trans-unit>
+    <trans-unit id="category.name.min_length">
+        <source>category.name.min_length</source>
+        <target>Nazwa kategorii musi mieć co najmniej {{ limit }} znaki.</target>
+    </trans-unit>
+    <trans-unit id="category.name.max_length">
+        <source>category.name.max_length</source>
+        <target>Nazwa kategorii nie może być dłuższa niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="category.description.type">
+        <source>category.description.type</source>
+        <target>Opis musi być poprawnym ciągiem znaków.</target>
+    </trans-unit>
+    <trans-unit id="category.description.max_length">
+        <source>category.description.max_length</source>
+        <target>Opis nie może być dłuższy niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="category.created_at.type">
+        <source>category.created_at.type</source>
+        <target>Data utworzenia musi być poprawną datą.</target>
+    </trans-unit>
+    <trans-unit id="category.updated_at.type">
+        <source>category.updated_at.type</source>
+        <target>Data aktualizacji musi być poprawną datą.</target>
+    </trans-unit>
+    <trans-unit id="category.slug.type">
+        <source>category.slug.type</source>
+        <target>Slug musi być poprawnym ciągiem znaków.</target>
+    </trans-unit>
+    <trans-unit id="category.slug.min_length">
+        <source>category.slug.min_length</source>
+        <target>Slug musi mieć co najmniej {{ limit }} znaki.</target>
+    </trans-unit>
+    <trans-unit id="category.slug.max_length">
+        <source>category.slug.max_length</source>
+        <target>Slug nie może być dłuższy niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.title.not_blank">
+        <source>wallet.title.not_blank</source>
+        <target>Tytuł portfela nie może być pusty.</target>
+    </trans-unit>
+    <trans-unit id="wallet.title.min_length">
+        <source>wallet.title.min_length</source>
+        <target>Tytuł portfela musi mieć co najmniej {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.title.max_length">
+        <source>wallet.title.max_length</source>
+        <target>Tytuł portfela nie może być dłuższy niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.description.max_length">
+        <source>wallet.description.max_length</source>
+        <target>Opis nie może być dłuższy niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.balance.not_null">
+        <source>wallet.balance.not_null</source>
+        <target>Saldo portfela nie może być puste.</target>
+    </trans-unit>
+    <trans-unit id="wallet.balance.type">
+        <source>wallet.balance.type</source>
+        <target>Saldo portfela musi być liczbą.</target>
+    </trans-unit>
+    <trans-unit id="wallet.balance.greater_than_or_equal">
+        <source>wallet.balance.greater_than_or_equal</source>
+        <target>Saldo portfela musi być większe lub równe 0.</target>
+    </trans-unit>
+    <trans-unit id="wallet.created_at.type">
+        <source>wallet.created_at.type</source>
+        <target>Data utworzenia musi być poprawną datą i godziną.</target>
+    </trans-unit>
+    <trans-unit id="wallet.updated_at.type">
+        <source>wallet.updated_at.type</source>
+        <target>Data aktualizacji musi być poprawną datą i godziną.</target>
+    </trans-unit>
+    <trans-unit id="wallet.tags.type">
+        <source>wallet.tags.type</source>
+        <target>Tagi muszą być ciągiem znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.tags.max_length">
+        <source>wallet.tags.max_length</source>
+        <target>Tagi nie mogą być dłuższe niż {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.slug.type">
+        <source>wallet.slug.type</source>
+        <target>Slug musi być ciągiem znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.slug.min_length">
+        <source>wallet.slug.min_length</source>
+        <target>Slug musi mieć co najmniej {{ limit }} znaków.</target>
+    </trans-unit>
+    <trans-unit id="wallet.slug.max_length">
+        <source>wallet.slug.max_length</source>
+        <target>Slug nie może być dłuższy niż {{ limit }} znaków.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
