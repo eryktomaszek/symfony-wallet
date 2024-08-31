@@ -9,6 +9,7 @@ namespace App\Entity;
 use App\Repository\WalletRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Wallet.
@@ -59,6 +60,7 @@ class Wallet
      * @var \DateTimeInterface|null
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt = null;
 
     /**
@@ -67,6 +69,7 @@ class Wallet
      * @var \DateTimeInterface|null
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updatedAt = null;
 
     /**

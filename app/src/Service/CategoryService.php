@@ -52,11 +52,6 @@ class CategoryService implements CategoryServiceInterface
      */
     public function save(Category $category): void
     {
-        if (null === $category->getCreatedAt()) {
-            $category->setCreatedAt(new \DateTimeImmutable());
-        }
-        $category->setUpdatedAt(new \DateTimeImmutable());
-
         $this->categoryRepository->save($category, true);
     }
 
