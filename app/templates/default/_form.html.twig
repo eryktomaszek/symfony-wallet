@@ -1,11 +1,4 @@
-{#
-Default template for forms.
-
-parameters:
-    - page_title: page title
-    - form: form view variable
-    - submit_label: label for submit button
-#}
+{# Default template for forms. #}
 
 <h1>{{ page_title }}</h1>
 {{ form_start(form) }}
@@ -18,12 +11,16 @@ parameters:
 
 {# Iterate over each form field #}
 {% for field in form %}
-    <div class="form-group{% if field.vars.required %} required{% endif %}">
-        {{ form_label(field) }}
-        {{ form_widget(field) }}
-        {{ form_errors(field) }}
-    </div>
+    {% if field.vars.block_prefixes|last != 'hidden' and field.vars.name != '_token' %}
+        <div class="form-group{% if field.vars.required %} required{% endif %}">
+            {{ form_label(field) }}
+            {{ form_widget(field) }}
+            {{ form_errors(field) }}
+        </div>
+    {% endif %}
 {% endfor %}
+
+<br>
 
 <div class="form-group row float-sm-right">
     <input type="submit" value="{{ submit_label }}" class="btn btn-primary"/>
