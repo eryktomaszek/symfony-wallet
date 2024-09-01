@@ -259,7 +259,7 @@ class Transaction
      *
      * @var Collection<int, Tag>|Tag[]
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinTable(name: 'transaction_tags')]
     private Collection $tags;
 
