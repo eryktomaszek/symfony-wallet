@@ -20,6 +20,12 @@
             <dd>{{ transaction.wallet.title }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{ transaction.category.name }}</dd>
+            <dt>{{ 'label.tags'|trans }}</dt>
+            <dd>
+                {% for tag in transaction.tags %}
+                    {{ tag.title }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </dd>
         </dl>
         <p>
             <a href="{{ path('transaction_index') }}" class="btn btn-secondary">

@@ -95,20 +95,8 @@ class Wallet
     private ?\DateTimeInterface $updatedAt = null;
 
     /**
-     * Tags.
-     *
-     * @var string|null
-     */
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Assert\Type('string', message: 'wallet.tags.type')]
-    #[Assert\Length(
-        max: 255,
-        maxMessage: 'wallet.tags.max_length'
-    )]
-    private ?string $tags = null;
-
-    /**
      * Slug.
+     *
      * @var string|null
      */
     #[Gedmo\Slug(fields: ['title'])]
@@ -253,34 +241,22 @@ class Wallet
     }
 
     /**
-     * Getter for tags.
+     * Getter for slug.
      *
-     * @return string|null Tags
+     * @return string|null Slug
      */
-    public function getTags(): ?string
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Setter for tags.
-     *
-     * @param string|null $tags Tags
-     *
-     * @return static
-     */
-    public function setTags(?string $tags): static
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return static
+     */
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;

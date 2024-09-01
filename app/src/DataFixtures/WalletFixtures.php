@@ -23,10 +23,10 @@ class WalletFixtures extends AbstractBaseFixtures
             $wallet->setBalance($this->faker->randomFloat(2, 0, 10000));
             $wallet->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $wallet->setUpdatedAt($this->faker->dateTimeBetween('-100 days', 'now'));
-            $wallet->setTags(implode(', ', $this->faker->words(3)));
+
             $this->manager->persist($wallet);
 
-            $this->addReference('wallet_' . $i, $wallet);
+            $this->addReference('wallet_'.$i, $wallet);
         }
 
         $this->manager->flush();

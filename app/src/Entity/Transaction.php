@@ -7,6 +7,8 @@
 namespace App\Entity;
 
 use App\Repository\TransactionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -248,6 +250,63 @@ class Transaction
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Tags associated with the transaction.
+     *
+     * @var Collection<int, Tag>|Tag[]
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions')]
+    #[ORM\JoinTable(name: 'transaction_tags')]
+    private Collection $tags;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * Getter for tags.
+     *
+     * @return Collection<int, Tag>|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Add a tag.
+     *
+     * @param Tag $tag Tag entity
+     *
+     * @return static
+     */
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a tag.
+     *
+     * @param Tag $tag Tag entity
+     *
+     * @return static
+     */
+    public function removeTag(Tag $tag): static
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

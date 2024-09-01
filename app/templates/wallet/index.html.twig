@@ -15,7 +15,6 @@
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'wallet.title') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'wallet.description') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.balance'|trans, 'wallet.balance') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'wallet.tags') }}</th>
                 <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -26,7 +25,6 @@
                     <td>{{ wallet.title }}</td>
                     <td>{{ wallet.description }}</td>
                     <td>{{ wallet.balance }}</td>
-                    <td>{{ wallet.tags }}</td>
                     <td>
                         <a href="{{ path('wallet_show', {'id': wallet.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
                         <a href="{{ path('wallet_edit', {'id': wallet.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>

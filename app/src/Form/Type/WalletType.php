@@ -17,13 +17,8 @@ class WalletType extends AbstractType
     /**
      * Builds the form.
      *
-     * This method is called for each type in the hierarchy starting from the
-     * topmost type. Type extensions can further modify the form.
-     *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string, mixed> $options Form options
-     *
-     * @see FormTypeExtensionInterface::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -52,14 +47,6 @@ class WalletType extends AbstractType
                     'label' => 'label.balance',
                     'required' => true,
                 ]
-            )
-            ->add(
-                'tags',
-                TextType::class,
-                [
-                    'label' => 'label.tags',
-                    'required' => false,
-                ]
             );
     }
 
@@ -75,9 +62,6 @@ class WalletType extends AbstractType
 
     /**
      * Returns the prefix of the template block name for this type.
-     *
-     * The block prefix defaults to the underscored short class name with
-     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
      *
      * @return string The prefix of the template block name
      */

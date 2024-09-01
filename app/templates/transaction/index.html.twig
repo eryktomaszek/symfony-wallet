@@ -20,6 +20,7 @@
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'transaction.tags') }}</th>
                 <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -33,6 +34,11 @@
                     <td>{{ transaction.date|format_date('long') }}</td>
                     <td>{{ transaction.category.name }}</td>
                     <td>{{ transaction.amount }}</td>
+                    <td>
+                        {% for tag in transaction.tags %}
+                            {{ tag.title }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
                         <a href="{{ path('transaction_edit', {'id': transaction.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>

@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\Transaction;
 use App\Entity\Category;
 use App\Entity\Wallet;
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -83,6 +84,18 @@ class TransactionType extends AbstractType
                     'choice_label' => 'name',
                     'label' => 'label.category',
                     'required' => true,
+                ]
+            )
+            ->add(
+                'tags',
+                EntityType::class,
+                [
+                    'class' => Tag::class,
+                    'choice_label' => 'title',
+                    'label' => 'label.tags',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'required' => false,
                 ]
             );
     }

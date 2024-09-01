@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.tag_view'|trans({'%id%': tag.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.tag_view'|trans({'%id%': tag.id}) }}</h1>
+    {% if tag is defined %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ tag.id }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{ tag.title }}</dd>
+            <dt>{{ 'label.slug'|trans }}</dt>
+            <dd>{{ tag.slug }}</dd>
+            <dt>{{ 'label.created_at'|trans }}</dt>
+            <dd>{{ tag.createdAt|date('Y/m/d H:i:s') }}</dd>
+            <dt>{{ 'label.updated_at'|trans }}</dt>
+            <dd>{{ tag.updatedAt|date('Y/m/d H:i:s') }}</dd>
+        </dl>
+        <p>
+            <a href="{{ path('tag_index') }}" class="btn btn-secondary">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.tag_not_found'|trans
+        } %}
+    {% endif %}
+{% endblock %}
