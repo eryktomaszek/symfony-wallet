@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.user_settings'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user_settings'|trans }}</h1>
+
+    <div class="alert alert-info">
+        <strong>{{ 'label.logged_in_as'|trans }}:</strong> {{ app.user.email }}<br>
+        <strong>{{ 'label.roles'|trans }}:</strong>
+        {% set role_labels = [] %}
+        {% for role in app.user.roles %}
+            {% if role == 'ROLE_ADMIN' %}
+                {% set role_labels = role_labels|merge(['admin']) %}
+            {% elseif role == 'ROLE_USER' %}
+                {% set role_labels = role_labels|merge(['user']) %}
+            {% endif %}
+        {% endfor %}
+        {{ role_labels|join(', ') }}
+    </div>
+
+    {% include 'default/_form.html.twig' with {
+        page_title: 'title.change_password'|trans,
+        form: form,
+        submit_label: 'action.change_password'|trans,
+    } %}
+
+{% endblock %}
