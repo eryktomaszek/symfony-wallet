@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Transaction;
+use App\Entity\User;
 use App\Form\Type\TransactionType;
 use App\Service\TransactionServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -38,12 +40,21 @@ class TransactionController extends AbstractController
     #[Route(name: 'transaction_index', methods: 'GET')]
     public function index(Request $request): Response
     {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            $this->addFlash('error', $this->translator->trans('message.user_not_found'));
+            return $this->redirectToRoute('app_login');
+        }
+
         $pagination = $this->transactionService->getPaginatedList(
-            $request->query->getInt('page', 1)
+            $request->query->getInt('page', 1),
+            $user
         );
 
         return $this->render('transaction/index.html.twig', ['pagination' => $pagination]);
     }
+
 
     /**
      * Show action.
@@ -59,12 +70,10 @@ class TransactionController extends AbstractController
         methods: 'GET'
     )]
     #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
+    #[IsGranted('VIEW', subject: 'transaction')]
     public function show(Transaction $transaction): Response
     {
-        return $this->render(
-            'transaction/show.html.twig',
-            ['transaction' => $transaction]
-        );
+        return $this->render('transaction/show.html.twig', ['transaction' => $transaction]);
     }
 
     /**
@@ -107,6 +116,7 @@ class TransactionController extends AbstractController
      */
     #[Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
+    #[IsGranted('EDIT', subject: 'transaction')]
     public function edit(Request $request, Transaction $transaction): Response
     {
         $form = $this->createForm(TransactionType::class, $transaction);
@@ -138,6 +148,7 @@ class TransactionController extends AbstractController
      */
     #[Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
     #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
+    #[IsGranted('DELETE', subject: 'transaction')]
     public function delete(Request $request, Transaction $transaction): Response
     {
         if ($this->isCsrfTokenValid('delete'.$transaction->getId(), $request->request->get('_token'))) {

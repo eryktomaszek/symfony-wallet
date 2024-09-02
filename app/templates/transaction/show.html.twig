@@ -26,6 +26,8 @@
                     {{ tag.title }}{% if not loop.last %}, {% endif %}
                 {% endfor %}
             </dd>
+            <dt>{{ 'label.author'|trans }}</dt>
+            <dd>{{ transaction.author.email }}</dd>
         </dl>
         <p>
             <a href="{{ path('transaction_index') }}" class="btn btn-secondary">

@@ -21,6 +21,7 @@
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'transaction.tags') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'transaction.author') }}</th>
                 <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -39,13 +40,20 @@
                             {{ tag.title }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
+                    <td>{{ transaction.author.email }}</td>
                     <td>
-                        <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
-                        <a href="{{ path('transaction_edit', {'id': transaction.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
-                        <form method="post" action="{{ path('transaction_delete', {'id': transaction.id}) }}" style="display:inline-block;">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transaction.id) }}">
-                            <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
-                        </form>
+                        {% if is_granted('VIEW', transaction) %}
+                            <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
+                        {% endif %}
+                        {% if is_granted('EDIT', transaction) %}
+                            <a href="{{ path('transaction_edit', {'id': transaction.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
+                        {% endif %}
+                        {% if is_granted('DELETE', transaction) %}
+                            <form method="post" action="{{ path('transaction_delete', {'id': transaction.id}) }}" style="display:inline-block;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transaction.id) }}">
+                                <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

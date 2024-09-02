@@ -101,6 +101,17 @@ class Transaction
     private ?Category $category = null;
 
     /**
+     * Author.
+     *
+     * @var User|null
+     */
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
+    private ?User $author = null;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Id
@@ -307,6 +318,30 @@ class Transaction
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * Getter for author.
+     *
+     * @return User|null
+     */
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    /**
+     * Setter for author.
+     *
+     * @param User|null $author Author
+     *
+     * @return static
+     */
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

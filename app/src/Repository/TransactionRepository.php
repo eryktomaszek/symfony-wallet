@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Transaction;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -93,6 +94,18 @@ class TransactionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function queryByAuthor(User $user): QueryBuilder
+    {
+        return $this->queryAll()
+            ->andWhere('transaction.author = :author')
+            ->setParameter('author', $user);
+    }
+
 
     /**
      * Get or create new query builder.
