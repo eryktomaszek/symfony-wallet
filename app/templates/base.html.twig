@@ -24,7 +24,10 @@
             <ul class="navbar-nav ms-auto">
                 {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_settings') }}">{{ app.user.email }}</a>
+                        <a class="nav-link" href="#">{{ app.user.email }}</a> {# Displays the current user's email #}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_settings') }}">{{ 'label.settings'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">{{ 'action.logout'|trans }}</a>
@@ -37,7 +40,15 @@
 
 <main role="main" class="container-fluid">
     <div class="container-fluid">
-        {% include 'default/_flash_messages.html.twig' %}
+        {# Flash messages display #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} mt-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </div>
 </main>

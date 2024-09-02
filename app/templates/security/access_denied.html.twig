@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.access_denied'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">{{ 'heading.access_denied'|trans }}</h4>
+        <p>{{ 'message.access_denied'|trans }}</p>
+    </div>
+    <a href="{{ path('app_logout') }}" class="btn btn-primary">{{ 'action.return_home'|trans }}</a>
+{% endblock %}
