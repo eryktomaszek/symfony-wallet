@@ -11,14 +11,13 @@
 
     <form method="get" action="{{ path('transaction_index') }}">
         <label>
-            <input type="date" name="startDate" value="{{ startDate }}" class="form-control"/>
+            <input type="date" name="startDate" value="{{ startDate ? startDate|date('Y-m-d') }}" class="form-control"/>
         </label>
         <label>
-            <input type="date" name="endDate" value="{{ endDate }}" class="form-control"/>
+            <input type="date" name="endDate" value="{{ endDate ? endDate|date('Y-m-d') }}" class="form-control"/>
         </label>
         <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
     </form>
-
 
     {% if pagination|length > 0 %}
         <table class="table">
@@ -38,13 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            {% set currentBalance = 0 %}
             {% for transaction in pagination %}
-                {% if transaction.type == 'income' %}
-                    {% set currentBalance = currentBalance + transaction.amount %}
-                {% else %}
-                    {% set currentBalance = currentBalance - transaction.amount %}
-                {% endif %}
                 <tr>
                     <th scope="row">{{ transaction.id }}</th>
                     <td>{{ transaction.wallet.title }}</td>
@@ -59,7 +52,7 @@
                         {% endfor %}
                     </td>
                     <td>{{ transaction.author.email }}</td>
-                    <td>{{ currentBalance }}</td>
+                    <td>{{ transaction.balanceAfter }}</td>
                     <td>
                         {% if is_granted('VIEW', transaction) %}
                             <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>

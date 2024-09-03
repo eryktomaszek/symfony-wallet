@@ -16,17 +16,31 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Security; // Import the Security component
+use Symfony\Component\Security\Core\Security;
 
+/**
+ * Class TransactionType.
+ */
 class TransactionType extends AbstractType
 {
     private Security $security;
 
+    /**
+     * Constructor.
+     *
+     * @param Security $security Security service
+     */
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
 
+    /**
+     * Build form.
+     *
+     * @param FormBuilderInterface $builder Form builder
+     * @param array                $options Form options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -85,6 +99,11 @@ class TransactionType extends AbstractType
         });
     }
 
+    /**
+     * Configure options.
+     *
+     * @param OptionsResolver $resolver Resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Transaction::class]);

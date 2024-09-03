@@ -21,6 +21,12 @@ class TransactionController extends AbstractController
     private TransactionServiceInterface $transactionService;
     private TranslatorInterface $translator;
 
+    /**
+     * Constructor.
+     *
+     * @param TransactionServiceInterface $transactionService Transaction service
+     * @param TranslatorInterface         $translator         Translator
+     */
     public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator)
     {
         $this->transactionService = $transactionService;
@@ -29,6 +35,10 @@ class TransactionController extends AbstractController
 
     /**
      * Index action.
+     *
+     * @param Request $request HTTP Request
+     *
+     * @return Response HTTP response
      */
     #[Route(name: 'transaction_index', methods: 'GET')]
     public function index(Request $request): Response
@@ -37,13 +47,13 @@ class TransactionController extends AbstractController
 
         if (!$user instanceof User) {
             $this->addFlash('error', $this->translator->trans('message.user_not_found'));
-
             return $this->redirectToRoute('app_login');
         }
 
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
 
+        // Fetch transactions with pagination and filters
         $pagination = $this->transactionService->getPaginatedList(
             $request->query->getInt('page', 1),
             $user,
@@ -53,13 +63,17 @@ class TransactionController extends AbstractController
 
         return $this->render('transaction/index.html.twig', [
             'pagination' => $pagination,
-            'startDate' => $startDate ? $startDate->format('Y-m-d') : '',
-            'endDate' => $endDate ? $endDate->format('Y-m-d') : '',
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 
     /**
      * Show action.
+     *
+     * @param Transaction $transaction Transaction entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}',
@@ -67,8 +81,6 @@ class TransactionController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
-    #[IsGranted('VIEW', subject: 'transaction')]
     public function show(Transaction $transaction): Response
     {
         return $this->render('transaction/show.html.twig', ['transaction' => $transaction]);
@@ -76,8 +88,12 @@ class TransactionController extends AbstractController
 
     /**
      * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
      */
-    #[Route('/create', name: 'transaction_create', methods: 'GET|POST')]
+    #[Route('/create', name: 'transaction_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $transaction = new Transaction();
@@ -87,9 +103,7 @@ class TransactionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->transactionService->save($transaction);
-
                 $this->addFlash('success', $this->translator->trans('message.created_successfully'));
-
                 return $this->redirectToRoute('transaction_index');
             } catch (\InvalidArgumentException $e) {
                 $this->addFlash('error', $e->getMessage());
@@ -103,20 +117,22 @@ class TransactionController extends AbstractController
 
     /**
      * Edit action.
+     *
+     * @param Request     $request     HTTP request
+     * @param Transaction $transaction Transaction entity
+     *
+     * @return Response HTTP response
      */
-    #[Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
-    #[IsGranted('EDIT', subject: 'transaction')]
+    #[Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Transaction $transaction): Response
     {
         $form = $this->createForm(TransactionType::class, $transaction);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->transactionService->save($transaction);
                 $this->addFlash('success', $this->translator->trans('message.updated_successfully'));
-
                 return $this->redirectToRoute('transaction_index');
             } catch (\InvalidArgumentException $e) {
                 $this->addFlash('error', $e->getMessage());
@@ -130,24 +146,20 @@ class TransactionController extends AbstractController
 
     /**
      * Delete action.
+     *
+     * @param Request     $request     HTTP request
+     * @param Transaction $transaction Transaction entity
+     *
+     * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
-    #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
-    #[IsGranted('DELETE', subject: 'transaction')]
+    #[Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
     public function delete(Request $request, Transaction $transaction): Response
     {
         if ($this->isCsrfTokenValid('delete'.$transaction->getId(), $request->request->get('_token'))) {
             $this->transactionService->delete($transaction);
-
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.deleted_successfully')
-            );
+            $this->addFlash('success', $this->translator->trans('message.deleted_successfully'));
         } else {
-            $this->addFlash(
-                'error',
-                $this->translator->trans('message.delete_failed')
-            );
+            $this->addFlash('error', $this->translator->trans('message.delete_failed'));
         }
 
         return $this->redirectToRoute('transaction_index');

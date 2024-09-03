@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Transaction entity.
- */
-
 namespace App\Entity;
 
 use App\Repository\TransactionRepository;
@@ -11,13 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Transaction.
- *
- * @psalm-suppress MissingConstructor
  */
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -110,6 +103,31 @@ class Transaction
     #[Assert\NotBlank]
     #[Assert\Type(User::class)]
     private ?User $author = null;
+
+    /**
+     * Tags associated with the transaction.
+     *
+     * @var Collection<int, Tag>|Tag[]
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions', fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinTable(name: 'transaction_tags')]
+    private Collection $tags;
+
+    /**
+     * Balance after the transaction.
+     *
+     * @var float|null
+     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $balanceAfter = null;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Getter for Id.
@@ -266,23 +284,6 @@ class Transaction
     }
 
     /**
-     * Tags associated with the transaction.
-     *
-     * @var Collection<int, Tag>|Tag[]
-     */
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions', fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinTable(name: 'transaction_tags')]
-    private Collection $tags;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->tags = new ArrayCollection();
-    }
-
-    /**
      * Getter for tags.
      *
      * @return Collection<int, Tag>|Tag[]
@@ -344,5 +345,27 @@ class Transaction
         $this->author = $author;
 
         return $this;
+    }
+
+    /**
+     * Getter for balanceAfter.
+     *
+     * @return float|null
+     */
+    public function getBalanceAfter(): ?float
+    {
+        return $this->balanceAfter;
+    }
+
+    /**
+     * Setter for balanceAfter.
+     *
+     * @param float|null $balanceAfter
+     *
+     * @return void
+     */
+    public function setBalanceAfter(?float $balanceAfter): void
+    {
+        $this->balanceAfter = $balanceAfter;
     }
 }
