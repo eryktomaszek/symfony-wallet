@@ -55,9 +55,15 @@ class TransactionService implements TransactionServiceInterface
      *
      * @return PaginationInterface Paginated list of transactions
      */
-    public function getPaginatedList(int $page, User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null, ?Category $category = null): PaginationInterface
-    {
-        $queryBuilder = $this->transactionRepository->queryByAuthorAndFilters($user, $startDate, $endDate, $category);
+    public function getPaginatedList(
+        int $page,
+        User $user,
+        ?\DateTimeInterface $startDate = null,
+        ?\DateTimeInterface $endDate = null,
+        ?Category $category = null,
+        array $tags = []
+    ): PaginationInterface {
+        $queryBuilder = $this->transactionRepository->queryByAuthorAndFilters($user, $startDate, $endDate, $category, $tags);
         return $this->paginator->paginate($queryBuilder, $page, self::PAGINATOR_ITEMS_PER_PAGE);
     }
 
@@ -71,22 +77,25 @@ class TransactionService implements TransactionServiceInterface
      */
     public function save(Transaction $transaction): void
     {
-        $wallet = $transaction->getWallet();
-        $currentBalance = $wallet->getBalance();
+        // If the transaction is new (has no id), calculate the new balance and set balanceAfter
+        if ($transaction->getId() === null) {
+            $wallet = $transaction->getWallet();
+            $currentBalance = $wallet->getBalance();
 
-        // Calculate the new balance after this transaction
-        $newBalance = $currentBalance + ($transaction->getType() === 'income' ? $transaction->getAmount() : -$transaction->getAmount());
+            // Calculate the new balance after this transaction
+            $newBalance = $currentBalance + ($transaction->getType() === 'income' ? $transaction->getAmount() : -$transaction->getAmount());
 
-        if ($newBalance < 0) {
-            $errorMessage = $this->translator->trans('wallet.balance_error');
-            throw new \InvalidArgumentException($errorMessage);
+            if ($newBalance < 0) {
+                $errorMessage = $this->translator->trans('wallet.balance_error');
+                throw new \InvalidArgumentException($errorMessage);
+            }
+
+            // Update the transaction's balanceAfter field
+            $transaction->setBalanceAfter($newBalance);
+
+            // Update the wallet's balance
+            $wallet->setBalance($newBalance);
         }
-
-        // Update the transaction's balanceAfter field
-        $transaction->setBalanceAfter($newBalance);
-
-        // Update the wallet's balance
-        $wallet->setBalance($newBalance);
 
         // Validate the transaction
         $errors = $this->validator->validate($transaction);

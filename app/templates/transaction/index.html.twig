@@ -10,20 +10,30 @@
     <a href="{{ path('transaction_create') }}" class="btn btn-primary mb-3">{{ 'title.create_transaction'|trans }}</a>
 
     <form method="get" action="{{ path('transaction_index') }}">
-        <label>
-            <input type="date" name="startDate" value="{{ startDate ? startDate|date('Y-m-d') }}" class="form-control"/>
-        </label>
-        <label>
-            <input type="date" name="endDate" value="{{ endDate ? endDate|date('Y-m-d') }}" class="form-control"/>
-        </label>
-        <label>
-            <select name="category" class="form-control">
-                <option value="">{{ 'label.all_categories'|trans }}</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}" {{ selectedCategoryId == category.id ? 'selected' : '' }}>{{ category.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        <div class="form-group">
+            <label>
+                <input type="date" name="startDate" value="{{ startDate ? startDate|date('Y-m-d') }}" class="form-control"/>
+            </label>
+            <label>
+                <input type="date" name="endDate" value="{{ endDate ? endDate|date('Y-m-d') }}" class="form-control"/>
+            </label>
+            <label>
+                <select name="categoryId" class="form-control">
+                    <option value="">{{ 'label.all_categories'|trans }}</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {{ selectedCategoryId == category.id ? 'selected' : '' }}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                <!-- Use the selectpicker class here for Bootstrap Select -->
+                <select name="tags[]" class="form-control selectpicker" multiple data-style="btn-primary" data-actions-box="true" data-live-search="true">
+                    {% for tag in tags %}
+                        <option value="{{ tag.id }}" {{ selectedTags is defined and tag.id in selectedTags ? 'selected' : '' }}>{{ tag.title }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
         <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
     </form>
 
@@ -89,4 +99,24 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Ensure jQuery is loaded -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Ensure Bootstrap JS is loaded -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Include Bootstrap Select JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+
+    <!-- Initialize Bootstrap Select -->
+    <script>
+        $(document).ready(function() {
+            // Initialize only the select elements with class 'selectpicker'
+            $('.selectpicker').selectpicker();
+        });
+    </script>
 {% endblock %}

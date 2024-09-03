@@ -8,7 +8,6 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @extends ServiceEntityRepository<Transaction>
@@ -30,8 +29,9 @@ class TransactionRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('transaction')
-            ->select('transaction', 'category')
+            ->select('transaction', 'category', 'tags')
             ->join('transaction.category', 'category')
+            ->leftJoin('transaction.tags', 'tags')
             ->orderBy('transaction.date', 'ASC');
     }
 
@@ -55,28 +55,26 @@ class TransactionRepository extends ServiceEntityRepository
 
     /**
      * Query transactions by author, optional date range, and category.
-     *
-     * @param User $user
-     * @param \DateTimeInterface|null $startDate
-     * @param \DateTimeInterface|null $endDate
-     * @param Category|null $category
-     *
-     * @return QueryBuilder
      */
-    public function queryByAuthorAndFilters(User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null, ?Category $category = null): QueryBuilder
-    {
+    public function queryByAuthorAndFilters(
+        User $user,
+        ?\DateTimeInterface $startDate = null,
+        ?\DateTimeInterface $endDate = null,
+        ?Category $category = null,
+        array $tags = [],
+    ): QueryBuilder {
         $qb = $this->queryAll()
             ->andWhere('transaction.author = :author')
             ->setParameter('author', $user);
 
         if ($startDate) {
             $qb->andWhere('transaction.date >= :startDate')
-                ->setParameter('startDate', $startDate->format('Y-m-d 00:00:00')); // Start of the day
+                ->setParameter('startDate', $startDate->format('Y-m-d'));
         }
 
         if ($endDate) {
             $qb->andWhere('transaction.date <= :endDate')
-                ->setParameter('endDate', $endDate->format('Y-m-d 23:59:59')); // End of the day
+                ->setParameter('endDate', $endDate->format('Y-m-d 23:59:59')); // Inclusive of the end date
         }
 
         if ($category) {
@@ -84,7 +82,11 @@ class TransactionRepository extends ServiceEntityRepository
                 ->setParameter('category', $category);
         }
 
+        if (!empty($tags)) {
+            $qb->andWhere('tags.id IN (:tags)')
+                ->setParameter('tags', $tags);
+        }
+
         return $qb;
     }
 }
-

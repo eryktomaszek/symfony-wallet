@@ -6,6 +6,7 @@ use App\Entity\Transaction;
 use App\Entity\User;
 use App\Form\Type\TransactionType;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use App\Service\TransactionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,14 @@ class TransactionController extends AbstractController
     private TransactionServiceInterface $transactionService;
     private TranslatorInterface $translator;
     private CategoryRepository $categoryRepository;
+    private TagRepository $tagRepository;
 
-    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator, CategoryRepository $categoryRepository)
+    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator, CategoryRepository $categoryRepository, TagRepository $tagRepository)
     {
         $this->transactionService = $transactionService;
         $this->translator = $translator;
         $this->categoryRepository = $categoryRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -49,29 +52,30 @@ class TransactionController extends AbstractController
 
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
-        $categoryId = $request->query->get('category');
-
-        // Fetching the Category entity
+        $categoryId = $request->query->get('categoryId');
         $selectedCategory = $categoryId ? $this->categoryRepository->find($categoryId) : null;
+        $tags = $request->query->all('tags', []);
 
-        // Fetch transactions with pagination and filters
         $pagination = $this->transactionService->getPaginatedList(
             $request->query->getInt('page', 1),
             $user,
             $startDate,
             $endDate,
-            $selectedCategory // Pass Category entity, not ID
+            $selectedCategory,
+            $tags
         );
 
-        // Fetch categories for the filter dropdown
         $categories = $this->categoryRepository->findAll();
+        $allTags = $this->tagRepository->findAll();
 
         return $this->render('transaction/index.html.twig', [
             'pagination' => $pagination,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'categories' => $categories,
-            'selectedCategoryId' => $categoryId, // Passing the selected category ID to the template
+            'selectedCategoryId' => $categoryId,
+            'tags' => $allTags,
+            'selectedTags' => $tags,
         ]);
     }
 
