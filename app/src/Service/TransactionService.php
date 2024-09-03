@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Transaction;
 use App\Entity\User;
+use App\Entity\Category;
 use App\Repository\TransactionRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,12 +51,13 @@ class TransactionService implements TransactionServiceInterface
      * @param User                   $user      User entity
      * @param \DateTimeInterface|null $startDate Start date filter
      * @param \DateTimeInterface|null $endDate   End date filter
+     * @param Category|null           $category  Category entity filter
      *
      * @return PaginationInterface Paginated list of transactions
      */
-    public function getPaginatedList(int $page, User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): PaginationInterface
+    public function getPaginatedList(int $page, User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null, ?Category $category = null): PaginationInterface
     {
-        $queryBuilder = $this->transactionRepository->queryByAuthorAndDateRange($user, $startDate, $endDate);
+        $queryBuilder = $this->transactionRepository->queryByAuthorAndFilters($user, $startDate, $endDate, $category);
         return $this->paginator->paginate($queryBuilder, $page, self::PAGINATOR_ITEMS_PER_PAGE);
     }
 

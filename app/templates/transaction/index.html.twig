@@ -16,6 +16,14 @@
         <label>
             <input type="date" name="endDate" value="{{ endDate ? endDate|date('Y-m-d') }}" class="form-control"/>
         </label>
+        <label>
+            <select name="category" class="form-control">
+                <option value="">{{ 'label.all_categories'|trans }}</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {{ selectedCategoryId == category.id ? 'selected' : '' }}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
         <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
     </form>
 

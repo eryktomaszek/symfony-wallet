@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Entity\User;
 use App\Form\Type\TransactionType;
+use App\Repository\CategoryRepository;
 use App\Service\TransactionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,17 +21,13 @@ class TransactionController extends AbstractController
 {
     private TransactionServiceInterface $transactionService;
     private TranslatorInterface $translator;
+    private CategoryRepository $categoryRepository;
 
-    /**
-     * Constructor.
-     *
-     * @param TransactionServiceInterface $transactionService Transaction service
-     * @param TranslatorInterface         $translator         Translator
-     */
-    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator)
+    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator, CategoryRepository $categoryRepository)
     {
         $this->transactionService = $transactionService;
         $this->translator = $translator;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -52,19 +49,29 @@ class TransactionController extends AbstractController
 
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
+        $categoryId = $request->query->get('category');
+
+        // Fetching the Category entity
+        $selectedCategory = $categoryId ? $this->categoryRepository->find($categoryId) : null;
 
         // Fetch transactions with pagination and filters
         $pagination = $this->transactionService->getPaginatedList(
             $request->query->getInt('page', 1),
             $user,
             $startDate,
-            $endDate
+            $endDate,
+            $selectedCategory // Pass Category entity, not ID
         );
+
+        // Fetch categories for the filter dropdown
+        $categories = $this->categoryRepository->findAll();
 
         return $this->render('transaction/index.html.twig', [
             'pagination' => $pagination,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'categories' => $categories,
+            'selectedCategoryId' => $categoryId, // Passing the selected category ID to the template
         ]);
     }
 
@@ -104,6 +111,7 @@ class TransactionController extends AbstractController
             try {
                 $this->transactionService->save($transaction);
                 $this->addFlash('success', $this->translator->trans('message.created_successfully'));
+
                 return $this->redirectToRoute('transaction_index');
             } catch (\InvalidArgumentException $e) {
                 $this->addFlash('error', $e->getMessage());
@@ -133,6 +141,7 @@ class TransactionController extends AbstractController
             try {
                 $this->transactionService->save($transaction);
                 $this->addFlash('success', $this->translator->trans('message.updated_successfully'));
+
                 return $this->redirectToRoute('transaction_index');
             } catch (\InvalidArgumentException $e) {
                 $this->addFlash('error', $e->getMessage());
