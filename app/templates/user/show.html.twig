@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.user_view'|trans({'%id%': user.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user_view'|trans({'%id%': user.id}) }}</h1>
+    {% if user is defined %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ user.id }}</dd>
+            <dt>{{ 'label.email'|trans }}</dt>
+            <dd>{{ user.email }}</dd>
+            <dt>{{ 'label.roles'|trans }}</dt>
+            <dd>{{ user.roles|join(', ') }}</dd>
+        </dl>
+        <p>
+            <a href="{{ path('user_index') }}" class="btn btn-secondary">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.user_not_found'|trans
+        } %}
+    {% endif %}
+{% endblock %}

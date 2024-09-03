@@ -362,6 +362,54 @@
           <source>title.edit_tag</source>
           <target>Edit Tag #%id%</target>
       </trans-unit>
+      <trans-unit id="heading.access_denied">
+        <source>heading.access_denied</source>
+        <target>Access Denied</target>
+      </trans-unit>
+      <trans-unit id="message.access_denied">
+        <source>message.access_denied</source>
+        <target>You do not have permission to access this page.</target>
+      </trans-unit>
+      <trans-unit id="action.return_home">
+        <source>action.return_home</source>
+        <target>Return to Home</target>
+      </trans-unit>
+      <trans-unit id="label.manage_users">
+        <source>label.manage_users</source>
+        <target>Manage Users</target>
+      </trans-unit>
+      <trans-unit id="title.user_list">
+        <source>title.user_list</source>
+        <target>User List</target>
+      </trans-unit>
+      <trans-unit id="title.create_user">
+        <source>title.create_user</source>
+        <target>Create User</target>
+      </trans-unit>
+      <trans-unit id="title.user_create">
+        <source>title.user_create</source>
+        <target>Create New User</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+        <target>Repeat Password</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="title.user_view">
+        <source>title.user_view</source>
+        <target>View User</target>
+      </trans-unit>
+      <trans-unit id="action.save_changes">
+        <source>action.save_changes</source>
+        <target>Save Changes</target>
+      </trans-unit>
+      <trans-unit id="action.sign_up">
+        <source>action.sign_up</source>
+        <target>Sign Up</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

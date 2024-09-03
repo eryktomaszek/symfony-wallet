@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title.user_list'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user_list'|trans }}</h1>
+
+    <a href="{{ path('user_create') }}" class="btn btn-primary mb-3">{{ 'title.create_user'|trans }}</a>
+
+    {% if pagination|length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'user.id') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.email'|trans, 'user.email') }}</th>
+                <th scope="col">{{ 'label.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning btn-sm">{{ 'action.edit'|trans }}</a>
+                        <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                            <button class="btn btn-danger btn-sm" type="submit">{{ 'action.delete'|trans }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
+    {% endif %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
