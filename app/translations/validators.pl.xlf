@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="pl" target-language="pl" datatype="plaintext" original="messages">
+    <body>
+      <trans-unit id="wallet.balance_error">
+        <source>wallet.balance_error</source>
+        <target>Saldo portfela musi być większe lub równe zero.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

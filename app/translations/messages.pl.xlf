@@ -410,6 +410,18 @@
         <source>action.sign_up</source>
         <target>Zarejestruj się</target>
       </trans-unit>
+      <trans-unit id="message.balance_error">
+          <source>message.balance_error</source>
+          <target>Saldo portfela nie może być ujemne.</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+        <source>message.form_error</source>
+        <target>Wystąpił błąd podczas przesyłania formularza. Sprawdź pola i spróbuj ponownie.</target>
+      </trans-unit>
+      <trans-unit id="wallet.balance_error">
+          <source>wallet.balance_error</source>
+          <target>Saldo portfela musi być większe lub równe zero.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

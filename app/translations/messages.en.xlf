@@ -410,6 +410,18 @@
         <source>action.sign_up</source>
         <target>Sign Up</target>
       </trans-unit>
+      <trans-unit id="message.balance_error">
+          <source>message.balance_error</source>
+          <target>The wallet balance cannot be negative.</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+          <source>message.form_error</source>
+          <target>There was an error with the form submission. Please check the fields and try again.</target>
+        </trans-unit>
+        <trans-unit id="wallet.balance_error">
+            <source>wallet.balance_error</source>
+            <target>The wallet balance must be greater than or equal to zero.</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

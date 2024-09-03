@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -77,14 +78,20 @@ class WalletController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->walletService->save($wallet);
+            try {
+                $this->walletService->save($wallet);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('message.created_successfully')
+                );
 
-            return $this->redirectToRoute('wallet_index');
+                return $this->redirectToRoute('wallet_index');
+            } catch (ValidationFailedException $e) {
+                $this->addFlash('danger', $this->translator->trans('message.form_error'));
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('danger', $this->translator->trans('message.balance_error'));
+            }
         }
 
         return $this->render('wallet/create.html.twig', [
@@ -108,14 +115,20 @@ class WalletController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->walletService->save($wallet);
+            try {
+                $this->walletService->save($wallet);
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.updated_successfully')
-            );
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('message.updated_successfully')
+                );
 
-            return $this->redirectToRoute('wallet_index');
+                return $this->redirectToRoute('wallet_index');
+            } catch (ValidationFailedException $e) {
+                $this->addFlash('danger', $this->translator->trans('message.form_error'));
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('danger', $this->translator->trans('message.balance_error'));
+            }
         }
 
         return $this->render('wallet/edit.html.twig', [

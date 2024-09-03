@@ -46,6 +46,9 @@ class WalletType extends AbstractType
                 [
                     'label' => 'label.balance',
                     'required' => true,
+                    'attr' => [
+                        'min' => 0,
+                    ],
                 ]
             );
     }

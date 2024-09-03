@@ -70,7 +70,7 @@ class Wallet
     #[Assert\Type(type: 'float', message: 'wallet.balance.type')]
     #[Assert\GreaterThanOrEqual(
         value: 0,
-        message: 'wallet.balance.greater_than_or_equal'
+        message: 'wallet.balance_error'
     )]
     private ?float $balance = null;
 
