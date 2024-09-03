@@ -422,6 +422,10 @@
             <source>wallet.balance_error</source>
             <target>The wallet balance must be greater than or equal to zero.</target>
         </trans-unit>
+      <trans-unit id="transaction.amount.not_null">
+        <source>transaction.amount.not_null</source>
+        <target>Please enter an amount.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -422,6 +422,10 @@
           <source>wallet.balance_error</source>
           <target>Saldo portfela musi być większe lub równe zero.</target>
       </trans-unit>
+            <trans-unit id="transaction.amount.not_null">
+              <source>transaction.amount.not_null</source>
+              <target>Proszę podać kwotę.</target>
+            </trans-unit>
     </body>
   </file>
 </xliff>

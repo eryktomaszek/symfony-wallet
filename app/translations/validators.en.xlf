@@ -6,6 +6,10 @@
         <source>wallet.balance_error</source>
         <target>The wallet balance must be zero or greater.</target>
       </trans-unit>
+      <trans-unit id="transaction.amount.positive">
+              <source>transaction.amount.positive</source>
+              <target>Wallet balance too low.</target>
+            </trans-unit>
     </body>
   </file>
 </xliff>

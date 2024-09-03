@@ -20,14 +20,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/transaction')]
 class TransactionController extends AbstractController
 {
-    /**
-     * Constructor.
-     *
-     * @param TransactionServiceInterface $transactionService Transaction service
-     * @param TranslatorInterface         $translator         Translator
-     */
-    public function __construct(private readonly TransactionServiceInterface $transactionService, private readonly TranslatorInterface $translator)
+    private TransactionServiceInterface $transactionService;
+    private TranslatorInterface $translator;
+
+    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator)
     {
+        $this->transactionService = $transactionService;
+        $this->translator = $translator;
     }
 
     /**
@@ -44,6 +43,7 @@ class TransactionController extends AbstractController
 
         if (!$user instanceof User) {
             $this->addFlash('error', $this->translator->trans('message.user_not_found'));
+
             return $this->redirectToRoute('app_login');
         }
 
@@ -54,7 +54,6 @@ class TransactionController extends AbstractController
 
         return $this->render('transaction/index.html.twig', ['pagination' => $pagination]);
     }
-
 
     /**
      * Show action.
@@ -78,10 +77,6 @@ class TransactionController extends AbstractController
 
     /**
      * Create action.
-     *
-     * @param Request $request HTTP request
-     *
-     * @return Response HTTP response
      */
     #[Route('/create', name: 'transaction_create', methods: 'GET|POST')]
     public function create(Request $request): Response
@@ -91,14 +86,14 @@ class TransactionController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->transactionService->save($transaction);
+            try {
+                $this->transactionService->save($transaction);
+                $this->addFlash('success', $this->translator->trans('message.created_successfully'));
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
-
-            return $this->redirectToRoute('transaction_index');
+                return $this->redirectToRoute('transaction_index');
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('transaction/create.html.twig', [
@@ -108,11 +103,6 @@ class TransactionController extends AbstractController
 
     /**
      * Edit action.
-     *
-     * @param Request     $request     HTTP request
-     * @param Transaction $transaction Transaction entity
-     *
-     * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[ParamConverter('transaction', class: 'App\Entity\Transaction')]
@@ -123,14 +113,14 @@ class TransactionController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->transactionService->save($transaction);
+            try {
+                $this->transactionService->save($transaction);
+                $this->addFlash('success', $this->translator->trans('message.updated_successfully'));
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.updated_successfully')
-            );
-
-            return $this->redirectToRoute('transaction_index');
+                return $this->redirectToRoute('transaction_index');
+            } catch (\InvalidArgumentException $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('transaction/edit.html.twig', [
