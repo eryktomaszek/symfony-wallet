@@ -11,16 +11,8 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class TransactionService.
- */
 class TransactionService implements TransactionServiceInterface
 {
-    /**
-     * Items per page.
-     *
-     * @constant int
-     */
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
     private TransactionRepository $transactionRepository;
@@ -28,9 +20,6 @@ class TransactionService implements TransactionServiceInterface
     private ValidatorInterface $validator;
     private TranslatorInterface $translator;
 
-    /**
-     * Constructor.
-     */
     public function __construct(
         TransactionRepository $transactionRepository,
         PaginatorInterface $paginator,
@@ -43,32 +32,21 @@ class TransactionService implements TransactionServiceInterface
         $this->translator = $translator;
     }
 
-    /**
-     * Get paginated list.
-     *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
-     */
-    public function getPaginatedList(int $page, User $author): PaginationInterface
+    public function getPaginatedList(int $page, User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): PaginationInterface
     {
-        return $this->paginator->paginate(
-            $this->transactionRepository->queryByAuthor($author),
-            $page,
-            self::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $queryBuilder = $this->transactionRepository->queryByAuthorAndDateRange($user, $startDate, $endDate);
+        return $this->paginator->paginate($queryBuilder, $page, self::PAGINATOR_ITEMS_PER_PAGE);
     }
 
-    /**
-     * Save transaction.
-     */
     public function save(Transaction $transaction): void
     {
+        // Validate the transaction entity
         $errors = $this->validator->validate($transaction);
         if (count($errors) > 0) {
             throw new ValidationFailedException($transaction, $errors);
         }
 
+        // Adjust wallet balance logic
         $wallet = $transaction->getWallet();
         $newBalance = $wallet->getBalance();
 
@@ -85,14 +63,11 @@ class TransactionService implements TransactionServiceInterface
 
         $wallet->setBalance($newBalance);
 
+        // Save the transaction
         $this->transactionRepository->save($transaction, true);
     }
 
-    /**
-     * Delete transaction.
-     *
-     * @param Transaction $transaction Transaction entity
-     */
+
     public function delete(Transaction $transaction): void
     {
         $this->transactionRepository->remove($transaction, true);

@@ -22,7 +22,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 1; ++$i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setRoles([UserRole::ROLE_USER->value]);
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
-        for ($i = 0; $i < 3; ++$i) {
+        for ($i = 0; $i < 1; ++$i) {
             $user = new User();
             $user->setEmail(sprintf('admin%d@example.com', $i));
             $user->setRoles([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);

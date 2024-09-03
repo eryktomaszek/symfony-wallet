@@ -13,110 +13,80 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security; // Import the Security component
 
-/**
- * Class TransactionType.
- */
 class TransactionType extends AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array<string, mixed> $options Form options
-     */
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'amount',
-                NumberType::class,
-                [
-                    'label' => 'label.amount',
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'description',
-                TextType::class,
-                [
-                    'label' => 'label.description',
-                    'required' => false,
-                ]
-            )
-            ->add(
-                'type',
-                ChoiceType::class,
-                [
-                    'label' => 'label.type',
-                    'choices' => [
-                        'Income' => 'income',
-                        'Expense' => 'expense',
-                    ],
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'date',
-                DateTimeType::class,
-                [
-                    'label' => 'label.date',
-                    'widget' => 'single_text',
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'wallet',
-                EntityType::class,
-                [
-                    'class' => Wallet::class,
-                    'choice_label' => 'title',
-                    'label' => 'label.wallet',
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'category',
-                EntityType::class,
-                [
-                    'class' => Category::class,
-                    'choice_label' => 'name',
-                    'label' => 'label.category',
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'tags',
-                EntityType::class,
-                [
-                    'class' => Tag::class,
-                    'choice_label' => 'title',
-                    'label' => 'label.tags',
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => false,
-                ]
-            );
+            ->add('amount', NumberType::class, [
+                'label' => 'label.amount',
+                'required' => true,
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'label.description',
+                'required' => true,
+            ])
+            ->add('type', ChoiceType::class, [
+                'label' => 'label.type',
+                'choices' => [
+                    'Income' => 'income',
+                    'Expense' => 'expense',
+                ],
+                'required' => true,
+            ])
+            ->add('date', DateTimeType::class, [
+                'label' => 'label.date',
+                'widget' => 'single_text',
+                'required' => true,
+            ])
+            ->add('wallet', EntityType::class, [
+                'class' => Wallet::class,
+                'choice_label' => 'title',
+                'label' => 'label.wallet',
+                'required' => true,
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'label' => 'label.category',
+                'required' => true,
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'title',
+                'label' => 'label.tags',
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
+            ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            /** @var Transaction $transaction */
+            $transaction = $event->getData();
+            $form = $event->getForm();
+
+            $user = $this->security->getUser();
+
+            if ($user) {
+                $form->getData()->setAuthor($user);
+            }
+        });
     }
 
-    /**
-     * Configures the options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Transaction::class]);
-    }
-
-    /**
-     * Returns the prefix of the template block name for this type.
-     *
-     * @return string The prefix of the template block name
-     */
-    public function getBlockPrefix(): string
-    {
-        return 'transaction';
     }
 }

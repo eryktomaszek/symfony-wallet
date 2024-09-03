@@ -23,6 +23,9 @@ class TransactionRepository extends ServiceEntityRepository
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 5;
 
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Transaction::class);
@@ -41,7 +44,7 @@ class TransactionRepository extends ServiceEntityRepository
                 'partial category.{id, name}'
             )
             ->join('transaction.category', 'category')
-            ->orderBy('transaction.id', 'ASC');
+            ->orderBy('transaction.date', 'ASC');
     }
 
     /**
@@ -99,12 +102,25 @@ class TransactionRepository extends ServiceEntityRepository
      * @param User $user
      * @return QueryBuilder
      */
-    public function queryByAuthor(User $user): QueryBuilder
+    public function queryByAuthorAndDateRange(User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): QueryBuilder
     {
-        return $this->queryAll()
+        $qb = $this->queryAll()
             ->andWhere('transaction.author = :author')
             ->setParameter('author', $user);
+
+        if ($startDate) {
+            $qb->andWhere('transaction.date >= :startDate')
+                ->setParameter('startDate', $startDate->format('Y-m-d'));
+        }
+
+        if ($endDate) {
+            $qb->andWhere('transaction.date <= :endDate')
+                ->setParameter('endDate', $endDate->format('Y-m-d'));
+        }
+
+        return $qb;
     }
+
 
 
     /**

@@ -6,12 +6,10 @@ use App\Entity\Transaction;
 use App\Entity\User;
 use App\Form\Type\TransactionType;
 use App\Service\TransactionServiceInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -31,10 +29,6 @@ class TransactionController extends AbstractController
 
     /**
      * Index action.
-     *
-     * @param Request $request HTTP Request
-     *
-     * @return Response HTTP response
      */
     #[Route(name: 'transaction_index', methods: 'GET')]
     public function index(Request $request): Response
@@ -47,20 +41,25 @@ class TransactionController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
+        $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
+
         $pagination = $this->transactionService->getPaginatedList(
             $request->query->getInt('page', 1),
-            $user
+            $user,
+            $startDate,
+            $endDate
         );
 
-        return $this->render('transaction/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('transaction/index.html.twig', [
+            'pagination' => $pagination,
+            'startDate' => $startDate ? $startDate->format('Y-m-d') : '',
+            'endDate' => $endDate ? $endDate->format('Y-m-d') : '',
+        ]);
     }
 
     /**
      * Show action.
-     *
-     * @param Transaction $transaction Transaction entity
-     *
-     * @return Response HTTP response
      */
     #[Route(
         '/{id}',
@@ -83,11 +82,12 @@ class TransactionController extends AbstractController
     {
         $transaction = new Transaction();
         $form = $this->createForm(TransactionType::class, $transaction);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->transactionService->save($transaction);
+
                 $this->addFlash('success', $this->translator->trans('message.created_successfully'));
 
                 return $this->redirectToRoute('transaction_index');
@@ -130,11 +130,6 @@ class TransactionController extends AbstractController
 
     /**
      * Delete action.
-     *
-     * @param Request     $request     HTTP request
-     * @param Transaction $transaction Transaction entity
-     *
-     * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
     #[ParamConverter('transaction', class: 'App\Entity\Transaction')]

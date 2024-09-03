@@ -9,6 +9,17 @@
 
     <a href="{{ path('transaction_create') }}" class="btn btn-primary mb-3">{{ 'title.create_transaction'|trans }}</a>
 
+    <form method="get" action="{{ path('transaction_index') }}">
+        <label>
+            <input type="date" name="startDate" value="{{ startDate }}" class="form-control"/>
+        </label>
+        <label>
+            <input type="date" name="endDate" value="{{ endDate }}" class="form-control"/>
+        </label>
+        <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
+    </form>
+
+
     {% if pagination|length > 0 %}
         <table class="table">
             <thead>
@@ -22,11 +33,18 @@
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'transaction.tags') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'transaction.author') }}</th>
+                <th scope="col">{{ 'label.balance_after'|trans }}</th>
                 <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
+            {% set currentBalance = 0 %}
             {% for transaction in pagination %}
+                {% if transaction.type == 'income' %}
+                    {% set currentBalance = currentBalance + transaction.amount %}
+                {% else %}
+                    {% set currentBalance = currentBalance - transaction.amount %}
+                {% endif %}
                 <tr>
                     <th scope="row">{{ transaction.id }}</th>
                     <td>{{ transaction.wallet.title }}</td>
@@ -41,6 +59,7 @@
                         {% endfor %}
                     </td>
                     <td>{{ transaction.author.email }}</td>
+                    <td>{{ currentBalance }}</td>
                     <td>
                         {% if is_granted('VIEW', transaction) %}
                             <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
