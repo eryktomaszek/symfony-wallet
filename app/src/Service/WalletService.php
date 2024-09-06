@@ -25,7 +25,7 @@ class WalletService implements WalletServiceInterface
      *
      * @constant int
      */
-    private const PAGINATOR_ITEMS_PER_PAGE = 2;
+    private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
     /**
      * Constructor.

@@ -132,15 +132,15 @@
       </trans-unit>
       <trans-unit id="message.created_successfully">
           <source>message.created_successfully</source>
-          <target>Category created successfully.</target>
+          <target>Created successfully.</target>
       </trans-unit>
       <trans-unit id="message.updated_successfully">
           <source>message.updated_successfully</source>
-          <target>Category updated successfully.</target>
+          <target>Updated successfully.</target>
       </trans-unit>
       <trans-unit id="message.deleted_successfully">
           <source>message.deleted_successfully</source>
-          <target>Category deleted successfully.</target>
+          <target>Deleted successfully.</target>
       </trans-unit>
       <trans-unit id="category.name.unique">
           <source>category.name.unique</source>
@@ -425,6 +425,38 @@
       <trans-unit id="transaction.amount.not_null">
         <source>transaction.amount.not_null</source>
         <target>Please enter an amount.</target>
+      </trans-unit>
+      <trans-unit id="title.transaction_create">
+          <source>title.transaction_create</source>
+          <target>Create Transaction</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+          <source>action.create</source>
+          <target>Create</target>
+      </trans-unit>
+      <trans-unit id="label.all_categories">
+          <source>label.all_categories</source>
+          <target>All Categories</target>
+      </trans-unit>
+      <trans-unit id="action.filter">
+          <source>action.filter</source>
+          <target>Filter</target>
+      </trans-unit>
+      <trans-unit id="label.author">
+          <source>label.author</source>
+          <target>Author</target>
+      </trans-unit>
+      <trans-unit id="label.balance_after">
+          <source>label.balance_after</source>
+          <target>Balance After</target>
+      </trans-unit>
+      <trans-unit id="title.register">
+          <source>title.register</source>
+          <target>Register</target>
+      </trans-unit>
+      <trans-unit id="message.registration_success">
+          <source>message.registration_success</source>
+          <target>Registration successful</target>
       </trans-unit>
     </body>
   </file>

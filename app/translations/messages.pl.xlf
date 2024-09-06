@@ -132,15 +132,15 @@
       </trans-unit>
       <trans-unit id="message.created_successfully">
           <source>message.created_successfully</source>
-          <target>Kategoria została pomyślnie utworzona.</target>
+          <target>Utworzono pomyślnie.</target>
       </trans-unit>
       <trans-unit id="message.updated_successfully">
           <source>message.updated_successfully</source>
-          <target>Kategoria została pomyślnie zaktualizowana.</target>
+          <target>Zaktualizowano pomyślnie.</target>
       </trans-unit>
       <trans-unit id="message.deleted_successfully">
           <source>message.deleted_successfully</source>
-          <target>Kategoria została pomyślnie usunięta.</target>
+          <target>Usunięto pomyślnie.</target>
       </trans-unit>
       <trans-unit id="category.name.unique">
           <source>category.name.unique</source>
@@ -422,10 +422,42 @@
           <source>wallet.balance_error</source>
           <target>Saldo portfela musi być większe lub równe zero.</target>
       </trans-unit>
-            <trans-unit id="transaction.amount.not_null">
-              <source>transaction.amount.not_null</source>
-              <target>Proszę podać kwotę.</target>
-            </trans-unit>
+      <trans-unit id="transaction.amount.not_null">
+        <source>transaction.amount.not_null</source>
+        <target>Proszę podać kwotę.</target>
+      </trans-unit>
+        <trans-unit id="title.transaction_create">
+            <source>title.transaction_create</source>
+            <target>Utwórz transakcję</target>
+        </trans-unit>
+        <trans-unit id="action.create">
+            <source>action.create</source>
+            <target>Utwórz</target>
+        </trans-unit>
+        <trans-unit id="label.all_categories">
+            <source>label.all_categories</source>
+            <target>Wszystkie kategorie</target>
+        </trans-unit>
+        <trans-unit id="action.filter">
+            <source>action.filter</source>
+            <target>Filtruj</target>
+        </trans-unit>
+        <trans-unit id="label.author">
+            <source>label.author</source>
+            <target>Autor</target>
+        </trans-unit>
+        <trans-unit id="label.balance_after">
+            <source>label.balance_after</source>
+            <target>Saldo po</target>
+        </trans-unit>
+        <trans-unit id="title.register">
+            <source>title.register</source>
+            <target>Zarejestruj</target>
+        </trans-unit>
+        <trans-unit id="message.registration_success">
+            <source>message.registration_success</source>
+            <target>Rejestracja zakończona sukcesem</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
