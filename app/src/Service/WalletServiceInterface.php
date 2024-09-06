@@ -1,6 +1,8 @@
 <?php
 /**
- * Wallet service interface.
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
  */
 
 namespace App\Service;

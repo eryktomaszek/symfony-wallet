@@ -1,6 +1,8 @@
 <?php
 /**
- * User entity.
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
  */
 
 namespace App\Entity;
@@ -20,33 +22,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'email_idx', columns: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * Primary key.
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-
-    /**
-     * Email.
-     */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
-
-    /**
-     * Roles.
-     *
-     * @var array<int, string>
-     */
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-
-    /**
-     * Password.
-     */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     private ?string $password = null;

@@ -1,10 +1,15 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Entity\Transaction;
 use App\Entity\User;
-use App\Entity\Category;
 use App\Repository\TransactionRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -19,11 +24,6 @@ class TransactionService implements TransactionServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
-    private TransactionRepository $transactionRepository;
-    private PaginatorInterface $paginator;
-    private ValidatorInterface $validator;
-    private TranslatorInterface $translator;
-
     /**
      * Constructor.
      *
@@ -32,38 +32,26 @@ class TransactionService implements TransactionServiceInterface
      * @param ValidatorInterface    $validator             Validator
      * @param TranslatorInterface   $translator            Translator
      */
-    public function __construct(
-        TransactionRepository $transactionRepository,
-        PaginatorInterface $paginator,
-        ValidatorInterface $validator,
-        TranslatorInterface $translator
-    ) {
-        $this->transactionRepository = $transactionRepository;
-        $this->paginator = $paginator;
-        $this->validator = $validator;
-        $this->translator = $translator;
+    public function __construct(private readonly TransactionRepository $transactionRepository, private readonly PaginatorInterface $paginator, private readonly ValidatorInterface $validator, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**
      * Get paginated list of transactions.
      *
-     * @param int                    $page      Page number
-     * @param User                   $user      User entity
+     * @param int                     $page      Page number
+     * @param User                    $user      User entity
      * @param \DateTimeInterface|null $startDate Start date filter
      * @param \DateTimeInterface|null $endDate   End date filter
      * @param Category|null           $category  Category entity filter
+     * @param array                   $tags      Array of tag IDs to filter by
      *
      * @return PaginationInterface Paginated list of transactions
      */
-    public function getPaginatedList(
-        int $page,
-        User $user,
-        ?\DateTimeInterface $startDate = null,
-        ?\DateTimeInterface $endDate = null,
-        ?Category $category = null,
-        array $tags = []
-    ): PaginationInterface {
+    public function getPaginatedList(int $page, User $user, ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null, ?Category $category = null, array $tags = []): PaginationInterface
+    {
         $queryBuilder = $this->transactionRepository->queryByAuthorAndFilters($user, $startDate, $endDate, $category, $tags);
+
         return $this->paginator->paginate($queryBuilder, $page, self::PAGINATOR_ITEMS_PER_PAGE);
     }
 
@@ -77,33 +65,26 @@ class TransactionService implements TransactionServiceInterface
      */
     public function save(Transaction $transaction): void
     {
-        // If the transaction is new (has no id), calculate the new balance and set balanceAfter
-        if ($transaction->getId() === null) {
+        if (null === $transaction->getId()) {
             $wallet = $transaction->getWallet();
             $currentBalance = $wallet->getBalance();
 
-            // Calculate the new balance after this transaction
-            $newBalance = $currentBalance + ($transaction->getType() === 'income' ? $transaction->getAmount() : -$transaction->getAmount());
+            $newBalance = $currentBalance + ('income' === $transaction->getType() ? $transaction->getAmount() : -$transaction->getAmount());
 
             if ($newBalance < 0) {
                 $errorMessage = $this->translator->trans('wallet.balance_error');
                 throw new \InvalidArgumentException($errorMessage);
             }
 
-            // Update the transaction's balanceAfter field
             $transaction->setBalanceAfter($newBalance);
-
-            // Update the wallet's balance
             $wallet->setBalance($newBalance);
         }
 
-        // Validate the transaction
         $errors = $this->validator->validate($transaction);
         if (count($errors) > 0) {
             throw new ValidationFailedException($transaction, $errors);
         }
 
-        // Persist the transaction
         $this->transactionRepository->save($transaction, true);
     }
 

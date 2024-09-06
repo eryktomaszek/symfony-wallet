@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -22,11 +27,6 @@ class WalletService implements WalletServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 2;
 
-    private WalletRepository $walletRepository;
-    private PaginatorInterface $paginator;
-    private ValidatorInterface $validator;
-    private TranslatorInterface $translator;
-
     /**
      * Constructor.
      *
@@ -35,16 +35,8 @@ class WalletService implements WalletServiceInterface
      * @param ValidatorInterface  $validator        Validator
      * @param TranslatorInterface $translator       Translator
      */
-    public function __construct(
-        WalletRepository $walletRepository,
-        PaginatorInterface $paginator,
-        ValidatorInterface $validator,
-        TranslatorInterface $translator,
-    ) {
-        $this->walletRepository = $walletRepository;
-        $this->paginator = $paginator;
-        $this->validator = $validator;
-        $this->translator = $translator;
+    public function __construct(private readonly WalletRepository $walletRepository, private readonly PaginatorInterface $paginator, private readonly ValidatorInterface $validator, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**

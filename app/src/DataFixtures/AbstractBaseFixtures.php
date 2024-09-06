@@ -1,6 +1,8 @@
 <?php
 /**
- * Base fixtures.
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
  */
 
 namespace App\DataFixtures;
@@ -16,14 +18,12 @@ use Faker\Generator;
 abstract class AbstractBaseFixtures extends Fixture
 {
     /**
-     * Faker.
+     * Faker generator instance.
      */
     protected Generator $faker;
 
     /**
      * Persistence object manager.
-     *
-     * @var ObjectManager
      */
     protected ObjectManager $manager;
 

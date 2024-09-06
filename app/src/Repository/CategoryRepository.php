@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Repository;
 
@@ -12,39 +17,35 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry The manager registry for Doctrine connections
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
     }
 
     /**
-     * Query all records.
+     * Query all records with optimized field selection.
      *
      * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial category.{id, name, description}'
+            )
             ->orderBy('category.id', 'ASC');
-    }
-
-    /**
-     * Get or create new query builder.
-     *
-     * @param QueryBuilder|null $queryBuilder Query builder
-     *
-     * @return QueryBuilder Query builder
-     */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('category');
     }
 
     /**
      * Save entity.
      *
      * @param Category $entity Category entity
-     * @param bool $flush Whether to flush changes to the database
+     * @param bool     $flush  Whether to flush changes to the database
      */
     public function save(Category $entity, bool $flush = false): void
     {
@@ -59,7 +60,7 @@ class CategoryRepository extends ServiceEntityRepository
      * Remove entity.
      *
      * @param Category $entity Category entity
-     * @param bool $flush Whether to flush changes to the database
+     * @param bool     $flush  Whether to flush changes to the database
      */
     public function remove(Category $entity, bool $flush = false): void
     {
@@ -68,5 +69,15 @@ class CategoryRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('category');
     }
 }

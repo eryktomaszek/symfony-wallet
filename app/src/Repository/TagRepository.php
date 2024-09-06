@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Repository;
 
@@ -13,8 +18,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class TagRepository extends ServiceEntityRepository
 {
     /**
-     * @param string $entityClass The class name of the entity this repository manages
-     * @psalm-param class-string<T> $entityClass
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry The manager registry for Doctrine
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -29,6 +35,7 @@ class TagRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('tag')
+            ->select('partial tag.{id, title}')
             ->orderBy('tag.id', 'ASC');
     }
 

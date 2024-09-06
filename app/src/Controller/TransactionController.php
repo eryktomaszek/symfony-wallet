@@ -1,12 +1,17 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Controller;
 
 use App\Entity\Transaction;
 use App\Entity\User;
 use App\Form\Type\TransactionType;
-use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
+use App\Service\CategoryServiceInterface;
+use App\Service\TagServiceInterface;
 use App\Service\TransactionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,45 +21,50 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class TransactionController.
+ *
+ * Controller responsible for handling transaction-related actions such as
+ * listing, creating, editing, and deleting transactions.
  */
-#[Route('/transaction')]
+#[\Symfony\Component\Routing\Attribute\Route('/transaction')]
 class TransactionController extends AbstractController
 {
-    private TransactionServiceInterface $transactionService;
-    private TranslatorInterface $translator;
-    private CategoryRepository $categoryRepository;
-    private TagRepository $tagRepository;
-
-    public function __construct(TransactionServiceInterface $transactionService, TranslatorInterface $translator, CategoryRepository $categoryRepository, TagRepository $tagRepository)
+    /**
+     * Constructor.
+     *
+     * @param TransactionServiceInterface $transactionService Transaction service
+     * @param CategoryServiceInterface    $categoryService    Category service
+     * @param TagServiceInterface         $tagService         Tag service
+     * @param TranslatorInterface         $translator         Translator service
+     */
+    public function __construct(private readonly TransactionServiceInterface $transactionService, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
     {
-        $this->transactionService = $transactionService;
-        $this->translator = $translator;
-        $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
     }
 
     /**
-     * Index action.
+     * Index action - displays a paginated list of transactions for the current user.
      *
-     * @param Request $request HTTP Request
+     * @param Request $request HTTP Request object
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response object
+     *
+     * @throws \DateMalformedStringException
      */
-    #[Route(name: 'transaction_index', methods: 'GET')]
+    #[\Symfony\Component\Routing\Attribute\Route(name: 'transaction_index', methods: 'GET')]
     public function index(Request $request): Response
     {
         $user = $this->getUser();
 
         if (!$user instanceof User) {
             $this->addFlash('error', $this->translator->trans('message.user_not_found'));
+
             return $this->redirectToRoute('app_login');
         }
 
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
         $categoryId = $request->query->get('categoryId');
-        $selectedCategory = $categoryId ? $this->categoryRepository->find($categoryId) : null;
-        $tags = $request->query->all('tags', []);
+        $selectedCategory = $categoryId ? $this->categoryService->getAllCategories()[$categoryId] ?? null : null;
+        $tags = $request->query->all('tags');
 
         $pagination = $this->transactionService->getPaginatedList(
             $request->query->getInt('page', 1),
@@ -65,8 +75,8 @@ class TransactionController extends AbstractController
             $tags
         );
 
-        $categories = $this->categoryRepository->findAll();
-        $allTags = $this->tagRepository->findAll();
+        $categories = $this->categoryService->getAllCategories();
+        $allTags = $this->tagService->getAllTags();
 
         return $this->render('transaction/index.html.twig', [
             'pagination' => $pagination,
@@ -80,31 +90,26 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * Show action.
+     * Show action - displays a specific transaction.
      *
      * @param Transaction $transaction Transaction entity
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response object
      */
-    #[Route(
-        '/{id}',
-        name: 'transaction_show',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET'
-    )]
+    #[\Symfony\Component\Routing\Attribute\Route('/{id}', name: 'transaction_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function show(Transaction $transaction): Response
     {
         return $this->render('transaction/show.html.twig', ['transaction' => $transaction]);
     }
 
     /**
-     * Create action.
+     * Create action - handles the creation of a new transaction.
      *
-     * @param Request $request HTTP request
+     * @param Request $request HTTP Request object
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response object
      */
-    #[Route('/create', name: 'transaction_create', methods: ['GET', 'POST'])]
+    #[\Symfony\Component\Routing\Attribute\Route('/create', name: 'transaction_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $transaction = new Transaction();
@@ -128,14 +133,14 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * Edit action.
+     * Edit action - handles editing of an existing transaction.
      *
-     * @param Request     $request     HTTP request
-     * @param Transaction $transaction Transaction entity
+     * @param Request     $request     HTTP Request object
+     * @param Transaction $transaction Transaction entity to be edited
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response object
      */
-    #[Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
+    #[\Symfony\Component\Routing\Attribute\Route('/{id}/edit', name: 'transaction_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Transaction $transaction): Response
     {
         $form = $this->createForm(TransactionType::class, $transaction);
@@ -158,14 +163,14 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * Delete action.
+     * Delete action - handles the deletion of a transaction.
      *
-     * @param Request     $request     HTTP request
-     * @param Transaction $transaction Transaction entity
+     * @param Request     $request     HTTP Request object
+     * @param Transaction $transaction Transaction entity to be deleted
      *
-     * @return Response HTTP response
+     * @return Response HTTP Response object
      */
-    #[Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    #[\Symfony\Component\Routing\Attribute\Route('/{id}/delete', name: 'transaction_delete', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
     public function delete(Request $request, Transaction $transaction): Response
     {
         if ($this->isCsrfTokenValid('delete'.$transaction->getId(), $request->request->get('_token'))) {

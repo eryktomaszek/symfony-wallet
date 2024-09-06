@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -22,8 +27,6 @@ class CategoryService implements CategoryServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
-    private TransactionRepository $transactionRepository;
-
     /**
      * Constructor.
      *
@@ -31,9 +34,8 @@ class CategoryService implements CategoryServiceInterface
      * @param PaginatorInterface    $paginator             Paginator
      * @param TransactionRepository $transactionRepository Transaction repository
      */
-    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator, TransactionRepository $transactionRepository)
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator, private readonly TransactionRepository $transactionRepository)
     {
-        $this->transactionRepository = $transactionRepository;
     }
 
     /**
@@ -88,5 +90,15 @@ class CategoryService implements CategoryServiceInterface
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
+    }
+
+    /**
+     * Get all categories.
+     *
+     * @return array<Category> List of categories
+     */
+    public function getAllCategories(): array
+    {
+        return $this->categoryRepository->findAll();
     }
 }

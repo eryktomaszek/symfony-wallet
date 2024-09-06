@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Controller;
 
@@ -17,13 +22,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class WalletController.
  */
-#[Route('/wallet')]
+#[\Symfony\Component\Routing\Attribute\Route('/wallet')]
 class WalletController extends AbstractController
 {
     /**
      * Constructor.
      *
      * @param WalletServiceInterface $walletService Wallet service
+     * @param TranslatorInterface    $translator    Translator service
      */
     public function __construct(private readonly WalletServiceInterface $walletService, private readonly TranslatorInterface $translator)
     {
@@ -33,11 +39,12 @@ class WalletController extends AbstractController
      * Index action.
      *
      * @param Request $request HTTP Request
+     * @param int     $page    Current page number for pagination
      *
      * @return Response HTTP response
      */
-    #[Route(name: 'wallet_index', methods: 'GET')]
-    public function index(Request $request, #[MapQueryParameter] int $page = 1): Response
+    #[\Symfony\Component\Routing\Attribute\Route(name: 'wallet_index', methods: 'GET')]
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->walletService->getPaginatedList($page);
 
@@ -51,13 +58,13 @@ class WalletController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
+    #[\Symfony\Component\Routing\Attribute\Route(
         '/{id}',
         name: 'wallet_show',
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    #[ParamConverter('wallet', class: 'App\Entity\Wallet')]
+    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
     public function show(Wallet $wallet): Response
     {
         return $this->render('wallet/show.html.twig', ['wallet' => $wallet]);
@@ -70,7 +77,7 @@ class WalletController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/create', name: 'wallet_create', methods: 'GET|POST')]
+    #[\Symfony\Component\Routing\Attribute\Route('/create', name: 'wallet_create', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $wallet = new Wallet();
@@ -87,9 +94,9 @@ class WalletController extends AbstractController
                 );
 
                 return $this->redirectToRoute('wallet_index');
-            } catch (ValidationFailedException $e) {
+            } catch (ValidationFailedException) {
                 $this->addFlash('danger', $this->translator->trans('message.form_error'));
-            } catch (\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException) {
                 $this->addFlash('danger', $this->translator->trans('message.balance_error'));
             }
         }
@@ -107,8 +114,8 @@ class WalletController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/edit', name: 'wallet_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[ParamConverter('wallet', class: 'App\Entity\Wallet')]
+    #[\Symfony\Component\Routing\Attribute\Route('/{id}/edit', name: 'wallet_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
     public function edit(Request $request, Wallet $wallet): Response
     {
         $form = $this->createForm(WalletType::class, $wallet);
@@ -124,9 +131,9 @@ class WalletController extends AbstractController
                 );
 
                 return $this->redirectToRoute('wallet_index');
-            } catch (ValidationFailedException $e) {
+            } catch (ValidationFailedException) {
                 $this->addFlash('danger', $this->translator->trans('message.form_error'));
-            } catch (\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException) {
                 $this->addFlash('danger', $this->translator->trans('message.balance_error'));
             }
         }
@@ -144,8 +151,8 @@ class WalletController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'wallet_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
-    #[ParamConverter('wallet', class: 'App\Entity\Wallet')]
+    #[\Symfony\Component\Routing\Attribute\Route('/{id}/delete', name: 'wallet_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
+    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
     public function delete(Request $request, Wallet $wallet): Response
     {
         if ($this->isCsrfTokenValid('delete'.$wallet->getId(), $request->request->get('_token'))) {

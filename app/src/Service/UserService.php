@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -9,20 +14,30 @@ use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class UserService.
+ *
+ * Provides methods for managing users, including pagination, saving, and deletion.
  */
 class UserService implements UserServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    private UserRepository $userRepository;
-    private PaginatorInterface $paginator;
-
-    public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
+    /**
+     * UserService constructor.
+     *
+     * @param UserRepository     $userRepository The user repository for database operations
+     * @param PaginatorInterface $paginator      The paginator for handling pagination
+     */
+    public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
     {
-        $this->userRepository = $userRepository;
-        $this->paginator = $paginator;
     }
 
+    /**
+     * Get paginated list of users.
+     *
+     * @param int $page The page number for pagination
+     *
+     * @return PaginationInterface The paginated list of users
+     */
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -32,11 +47,21 @@ class UserService implements UserServiceInterface
         );
     }
 
+    /**
+     * Save a user entity.
+     *
+     * @param User $user The user entity to save
+     */
     public function save(User $user): void
     {
         $this->userRepository->save($user, true);
     }
 
+    /**
+     * Delete a user entity.
+     *
+     * @param User $user The user entity to delete
+     */
     public function delete(User $user): void
     {
         $this->userRepository->remove($user, true);

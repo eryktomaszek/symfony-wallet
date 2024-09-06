@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Form\Type;
 
@@ -23,16 +28,13 @@ use Symfony\Component\Security\Core\Security;
  */
 class TransactionType extends AbstractType
 {
-    private Security $security;
-
     /**
      * Constructor.
      *
      * @param Security $security Security service
      */
-    public function __construct(Security $security)
+    public function __construct(private readonly Security $security)
     {
-        $this->security = $security;
     }
 
     /**
@@ -93,7 +95,7 @@ class TransactionType extends AbstractType
 
             $user = $this->security->getUser();
 
-            if ($user) {
+            if ($user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
                 $form->getData()->setAuthor($user);
             }
         });

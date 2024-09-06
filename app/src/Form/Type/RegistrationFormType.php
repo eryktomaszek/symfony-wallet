@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Form\Type;
 
@@ -13,8 +18,19 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Class RegistrationFormType.
+ *
+ * Handles the form building for user registration.
+ */
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * Build the registration form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options Additional options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -40,6 +56,11 @@ class RegistrationFormType extends AbstractType
             ]);
     }
 
+    /**
+     * Configure the options for the registration form.
+     *
+     * @param OptionsResolver $resolver The options resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

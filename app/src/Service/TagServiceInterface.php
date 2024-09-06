@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -32,4 +37,11 @@ interface TagServiceInterface
      * @param Tag $tag Tag entity
      */
     public function delete(Tag $tag): void;
+
+    /**
+     * Get all tags.
+     *
+     * @return array<Tag> List of tags
+     */
+    public function getAllTags(): array;
 }

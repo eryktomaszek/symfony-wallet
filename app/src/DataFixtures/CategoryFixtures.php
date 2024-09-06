@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\DataFixtures;
 
@@ -22,10 +27,9 @@ class CategoryFixtures extends AbstractBaseFixtures
             $category->setUpdatedAt($this->faker->dateTimeThisDecade);
 
             $this->manager->persist($category);
-            $this->addReference('category_' . $i, $category);
+            $this->addReference('category_'.$i, $category);
         }
 
         $this->manager->flush();
     }
 }
-

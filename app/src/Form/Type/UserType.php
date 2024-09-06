@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Form\Type;
 
@@ -10,14 +15,21 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Class UserType.
+ *
+ * Defines the form used to create or edit a user.
  */
 class UserType extends AbstractType
 {
+    /**
+     * Builds the form for the user entity.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string, mixed> $options The form options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -52,6 +64,11 @@ class UserType extends AbstractType
             ]);
     }
 
+    /**
+     * Configures the options for this form type.
+     *
+     * @param OptionsResolver $resolver The resolver for options
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

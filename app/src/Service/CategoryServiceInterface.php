@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -41,4 +46,11 @@ interface CategoryServiceInterface
      * @return bool Result
      */
     public function canBeDeleted(Category $category): bool;
+
+    /**
+     * Get all categories.
+     *
+     * @return array<Category> List of categories
+     */
+    public function getAllCategories(): array;
 }

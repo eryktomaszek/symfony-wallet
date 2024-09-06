@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -63,5 +68,15 @@ class TagService implements TagServiceInterface
     public function delete(Tag $tag): void
     {
         $this->tagRepository->remove($tag, true);
+    }
+
+    /**
+     * Get all tags.
+     *
+     * @return array<Tag> List of tags
+     */
+    public function getAllTags(): array
+    {
+        return $this->tagRepository->findAll();
     }
 }

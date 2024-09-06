@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Service;
 
@@ -6,19 +11,28 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Class RegistrationService.
+ *
+ * Service to handle user registration.
+ */
 class RegistrationService implements RegistrationServiceInterface
 {
-    private EntityManagerInterface $entityManager;
-    private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher
-    ) {
-        $this->entityManager = $entityManager;
-        $this->passwordHasher = $passwordHasher;
+    /**
+     * RegistrationService constructor.
+     *
+     * @param EntityManagerInterface      $entityManager  The entity manager for database operations
+     * @param UserPasswordHasherInterface $passwordHasher The password hasher for encoding user passwords
+     */
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly UserPasswordHasherInterface $passwordHasher)
+    {
     }
 
+    /**
+     * Register a new user.
+     *
+     * @param User $user The user to register
+     */
     public function registerUser(User $user): void
     {
         $hashedPassword = $this->passwordHasher->hashPassword(

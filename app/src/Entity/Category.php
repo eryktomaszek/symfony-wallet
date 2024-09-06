@@ -1,7 +1,8 @@
 <?php
-
 /**
- * Category entity.
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
  */
 
 namespace App\Entity;
@@ -24,21 +25,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['name'], message: 'category.name.unique')]
 class Category
 {
-    /**
-     * Primary key.
-     *
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * Name.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string', message: 'category.name.type')]
     #[Assert\NotBlank(message: 'category.name.not_blank')]
@@ -50,11 +41,6 @@ class Category
     )]
     private ?string $name = null;
 
-    /**
-     * Description.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Type('string', message: 'category.description.type')]
     #[Assert\Length(
@@ -63,31 +49,16 @@ class Category
     )]
     private ?string $description = null;
 
-    /**
-     * Created at.
-     *
-     * @var \DateTimeImmutable|null
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type(\DateTimeImmutable::class, message: 'category.created_at.type')]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?\DateTimeInterface $createdAt;
 
-    /**
-     * Updated at.
-     *
-     * @var \DateTimeImmutable|null
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type(\DateTimeImmutable::class, message: 'category.updated_at.type')]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?\DateTimeInterface $updatedAt;
 
-    /**
-     * Slug.
-     *
-     * @var string|null
-     */
     #[ORM\Column(length: 255)]
     #[Assert\Type('string', message: 'category.slug.type')]
     #[Assert\Length(
@@ -113,7 +84,7 @@ class Category
     /**
      * Getter for Id.
      *
-     * @return int|null Id
+     * @return int|null The category ID
      */
     public function getId(): ?int
     {
@@ -123,7 +94,7 @@ class Category
     /**
      * Getter for name.
      *
-     * @return string|null Name
+     * @return string|null The category name
      */
     public function getName(): ?string
     {
@@ -134,6 +105,8 @@ class Category
      * Setter for name.
      *
      * @param string $name Name
+     *
+     * @return static
      */
     public function setName(string $name): static
     {
@@ -145,7 +118,7 @@ class Category
     /**
      * Getter for description.
      *
-     * @return string|null Description
+     * @return string|null The category description
      */
     public function getDescription(): ?string
     {
@@ -156,6 +129,8 @@ class Category
      * Setter for description.
      *
      * @param string|null $description Description
+     *
+     * @return static
      */
     public function setDescription(?string $description): static
     {
@@ -167,7 +142,7 @@ class Category
     /**
      * Getter for createdAt.
      *
-     * @return \DateTimeInterface|null Created at
+     * @return \DateTimeInterface|null Created at timestamp
      */
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -177,7 +152,9 @@ class Category
     /**
      * Setter for createdAt.
      *
-     * @param \DateTimeInterface $createdAt Created at
+     * @param \DateTimeInterface $createdAt Created at timestamp
+     *
+     * @return static
      */
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
@@ -189,7 +166,7 @@ class Category
     /**
      * Getter for updatedAt.
      *
-     * @return \DateTimeInterface|null Updated at
+     * @return \DateTimeInterface|null Updated at timestamp
      */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -199,7 +176,9 @@ class Category
     /**
      * Setter for updatedAt.
      *
-     * @param \DateTimeInterface $updatedAt Updated at
+     * @param \DateTimeInterface $updatedAt Updated at timestamp
+     *
+     * @return static
      */
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
@@ -211,7 +190,7 @@ class Category
     /**
      * Getter for slug.
      *
-     * @return string|null Slug
+     * @return string|null The slug for the category
      */
     public function getSlug(): ?string
     {
@@ -222,6 +201,8 @@ class Category
      * Setter for slug.
      *
      * @param string $slug Slug
+     *
+     * @return static
      */
     public function setSlug(string $slug): static
     {

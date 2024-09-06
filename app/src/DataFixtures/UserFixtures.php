@@ -1,12 +1,17 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Enum\UserRole;
 use App\Entity\User;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Class UserFixtures.
@@ -20,6 +25,13 @@ class UserFixtures extends Fixture
     {
     }
 
+    /**
+     * Load user data fixtures.
+     *
+     * Creates and persists example user and admin accounts into the database.
+     *
+     * @param ObjectManager $manager The object manager used for persisting entities
+     */
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 1; ++$i) {

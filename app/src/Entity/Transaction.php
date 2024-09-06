@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Entity;
 
@@ -15,31 +20,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {
-    /**
-     * Primary key.
-     *
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * Amount.
-     *
-     * @var float|null
-     */
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull(message: 'transaction.amount.not_null')]
     #[Assert\Positive(message: 'transaction.amount.positive')]
     private ?float $amount = null;
 
-    /**
-     * Description.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'transaction.description.not_blank')]
     #[Assert\Length(
@@ -50,21 +40,11 @@ class Transaction
     )]
     private ?string $description = null;
 
-    /**
-     * Type (income or expense).
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'transaction.type.not_blank')]
     #[Assert\Choice(choices: ['income', 'expense'], message: 'transaction.type.invalid_choice')]
     private ?string $type = null;
 
-    /**
-     * Date.
-     *
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull(message: 'transaction.date.not_null')]
     #[Assert\Type(
@@ -73,51 +53,26 @@ class Transaction
     )]
     private ?\DateTimeInterface $date = null;
 
-    /**
-     * Wallet associated with the transaction.
-     *
-     * @var Wallet|null
-     */
     #[ORM\ManyToOne(targetEntity: Wallet::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'transaction.wallet.not_null')]
     private ?Wallet $wallet = null;
 
-    /**
-     * Category associated with the transaction.
-     *
-     * @var Category|null
-     */
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'transaction.category.not_null')]
     private ?Category $category = null;
 
-    /**
-     * Author.
-     *
-     * @var User|null
-     */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Type(User::class)]
     private ?User $author = null;
 
-    /**
-     * Tags associated with the transaction.
-     *
-     * @var Collection<int, Tag>|Tag[]
-     */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinTable(name: 'transaction_tags')]
     private Collection $tags;
 
-    /**
-     * Balance after the transaction.
-     *
-     * @var float|null
-     */
     #[ORM\Column(type: 'float', nullable: true)]
     private ?float $balanceAfter = null;
 
@@ -286,7 +241,7 @@ class Transaction
     /**
      * Getter for tags.
      *
-     * @return Collection<int, Tag>|Tag[]
+     * @return Collection<Tag> Collection of tags
      */
     public function getTags(): Collection
     {
@@ -326,7 +281,7 @@ class Transaction
     /**
      * Getter for author.
      *
-     * @return User|null
+     * @return User|null Author
      */
     public function getAuthor(): ?User
     {
@@ -350,7 +305,7 @@ class Transaction
     /**
      * Getter for balanceAfter.
      *
-     * @return float|null
+     * @return float|null Balance after the transaction
      */
     public function getBalanceAfter(): ?float
     {
@@ -360,9 +315,7 @@ class Transaction
     /**
      * Setter for balanceAfter.
      *
-     * @param float|null $balanceAfter
-     *
-     * @return void
+     * @param float|null $balanceAfter The balance after the transaction
      */
     public function setBalanceAfter(?float $balanceAfter): void
     {

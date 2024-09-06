@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Controller;
 
@@ -17,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class UserSettingsController.
  */
-#[Route('/settings')]
+#[\Symfony\Component\Routing\Attribute\Route('/settings')]
 class UserSettingsController extends AbstractController
 {
     /**
@@ -32,15 +37,9 @@ class UserSettingsController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/change-password', name: 'user_settings', methods: 'GET|POST')]
-    public function changePassword(
-        Request $request,
-        UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-        TokenStorageInterface $tokenStorage,
-        SessionInterface $session,
-    ): Response {
+    #[\Symfony\Component\Routing\Attribute\Route('/change-password', name: 'user_settings', methods: 'GET|POST')]
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    {
         /** @var User $user */
         $user = $this->getUser();
 

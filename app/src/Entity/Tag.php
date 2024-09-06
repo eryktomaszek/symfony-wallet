@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Entity;
 
@@ -14,21 +19,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'tags')]
 class Tag
 {
-    /**
-     * Primary key.
-     *
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * Title.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 64, unique: true)]
     #[Assert\NotBlank(message: 'tag.title.not_blank')]
     #[Assert\Length(
@@ -39,29 +34,14 @@ class Tag
     )]
     private ?string $title = null;
 
-    /**
-     * Slug.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 64, unique: true)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
 
-    /**
-     * Created at.
-     *
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt = null;
 
-    /**
-     * Updated at.
-     *
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: 'datetime')]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updatedAt = null;

@@ -1,7 +1,8 @@
 <?php
-
 /**
- * Wallet entity.
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
  */
 
 namespace App\Entity;
@@ -21,21 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'wallets')]
 class Wallet
 {
-    /**
-     * Primary key.
-     *
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * Title.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
     #[Assert\NotBlank(message: 'wallet.title.not_blank')]
@@ -47,11 +38,6 @@ class Wallet
     )]
     private ?string $title = null;
 
-    /**
-     * Description.
-     *
-     * @var string|null
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Type('string')]
     #[Assert\Length(
@@ -60,11 +46,6 @@ class Wallet
     )]
     private ?string $description = null;
 
-    /**
-     * Balance.
-     *
-     * @var float|null
-     */
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull(message: 'wallet.balance.not_null')]
     #[Assert\Type(type: 'float', message: 'wallet.balance.type')]
@@ -74,31 +55,16 @@ class Wallet
     )]
     private ?float $balance = null;
 
-    /**
-     * Created at.
-     *
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type(\DateTimeInterface::class, message: 'wallet.created_at.type')]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt = null;
 
-    /**
-     * Updated at.
-     *
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\Type(\DateTimeInterface::class, message: 'wallet.updated_at.type')]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * Slug.
-     *
-     * @var string|null
-     */
     #[Gedmo\Slug(fields: ['title'])]
     #[ORM\Column(length: 255)]
     #[Assert\Type('string', message: 'wallet.slug.type')]

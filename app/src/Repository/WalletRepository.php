@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Repository;
 
@@ -12,17 +17,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WalletRepository extends ServiceEntityRepository
 {
-    /**
-     * Items per page.
-     *
-     * Use constants to define configuration options that rarely change instead
-     * of specifying them in configuration files.
-     * See https://symfony.com/doc/current/best_practices.html#configuration
-     *
-     * @constant int
-     */
-    public const PAGINATOR_ITEMS_PER_PAGE = 2;
-
     /**
      * Constructor.
      *
@@ -41,26 +35,15 @@ class WalletRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
+            ->select('partial wallet.{id, title, description, balance}')
             ->orderBy('wallet.id', 'ASC');
-    }
-
-    /**
-     * Get or create new query builder.
-     *
-     * @param QueryBuilder|null $queryBuilder Query builder
-     *
-     * @return QueryBuilder Query builder
-     */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('wallet');
     }
 
     /**
      * Save entity.
      *
      * @param Wallet $entity Wallet entity
-     * @param bool $flush Whether to flush changes to the database
+     * @param bool   $flush  Whether to flush changes to the database
      */
     public function save(Wallet $entity, bool $flush = false): void
     {
@@ -75,7 +58,7 @@ class WalletRepository extends ServiceEntityRepository
      * Remove entity.
      *
      * @param Wallet $entity Wallet entity
-     * @param bool $flush Whether to flush changes to the database
+     * @param bool   $flush  Whether to flush changes to the database
      */
     public function remove(Wallet $entity, bool $flush = false): void
     {
@@ -84,5 +67,15 @@ class WalletRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('wallet');
     }
 }

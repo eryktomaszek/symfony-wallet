@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Budgetly project.
+ *
+ * (c) Eryk Tomaszek 2024 <eryk.tomaszek@student.uj.edu.pl>
+ */
 
 namespace App\Form\Type;
 
@@ -26,14 +31,16 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'name',
-            TextType::class,
-            [
-                'label' => 'label.name',
-                'required' => true,
-                'attr' => ['max_length' => 64],
-            ])
+        $builder
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'label.name',
+                    'required' => true,
+                    'attr' => ['max_length' => 64],
+                ]
+            )
             ->add(
                 'description',
                 TextType::class,
