@@ -1,15 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="messages">
-    <body>
-      <trans-unit id="wallet.balance_error">
-        <source>wallet.balance_error</source>
-        <target>The wallet balance must be zero or greater.</target>
-      </trans-unit>
-      <trans-unit id="transaction.amount.positive">
-              <source>transaction.amount.positive</source>
-              <target>Wallet balance too low.</target>
-            </trans-unit>
-    </body>
-  </file>
+   <file source-language="en" target-language="en" datatype="plaintext" original="messages">
+      <body>
+         <trans-unit id="wallet.balance_error">
+            <source>wallet.balance_error</source>
+            <target>The wallet balance must be zero or greater.</target>
+         </trans-unit>
+         <trans-unit id="transaction.amount.positive">
+            <source>transaction.amount.positive</source>
+            <target>Wallet balance too low.</target>
+         </trans-unit>
+         <trans-unit id="Please enter an email">
+            <source>Please enter an email</source>
+            <target>Please enter an email.</target>
+         </trans-unit>
+         <trans-unit id="The email is not a valid email.">
+            <source>The email is not a valid email.</source>
+            <target>The email is not a valid email.</target>
+         </trans-unit>
+         <trans-unit id="Please enter a password">
+            <source>Please enter a password</source>
+            <target>Please enter a password.</target>
+         </trans-unit>
+         <trans-unit id="Your password should be at least {{ limit }} characters">
+            <source>Your password should be at least {{ limit }} characters</source>
+            <target>Your password should be at least {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="password.current.not_blank">
+            <source>password.current.not_blank</source>
+            <target>The current password should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="password.new.not_blank">
+            <source>password.new.not_blank</source>
+            <target>The new password should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="password.new.min_length">
+            <source>password.new.min_length</source>
+            <target>The new password should be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="password.confirm.not_blank">
+            <source>password.confirm.not_blank</source>
+            <target>The confirmation password should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="category.name.unique">
+            <source>category.name.unique</source>
+            <target>The category name must be unique.</target>
+         </trans-unit>
+         <trans-unit id="category.name.type">
+            <source>category.name.type</source>
+            <target>The category name must be a valid string.</target>
+         </trans-unit>
+         <trans-unit id="category.name.not_blank">
+            <source>category.name.not_blank</source>
+            <target>The category name should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="category.name.min_length">
+            <source>category.name.min_length</source>
+            <target>The category name must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="category.name.max_length">
+            <source>category.name.max_length</source>
+            <target>The category name cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="category.description.type">
+            <source>category.description.type</source>
+            <target>The category description must be a valid string.</target>
+         </trans-unit>
+         <trans-unit id="category.description.max_length">
+            <source>category.description.max_length</source>
+            <target>The category description cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="category.created_at.type">
+            <source>category.created_at.type</source>
+            <target>The creation date must be a valid date.</target>
+         </trans-unit>
+         <trans-unit id="category.updated_at.type">
+            <source>category.updated_at.type</source>
+            <target>The update date must be a valid date.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.type">
+            <source>category.slug.type</source>
+            <target>The slug must be a valid string.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.min_length">
+            <source>category.slug.min_length</source>
+            <target>The slug must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.max_length">
+            <source>category.slug.max_length</source>
+            <target>The slug cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="transaction.amount.not_null">
+            <source>transaction.amount.not_null</source>
+            <target>Please enter an amount.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.not_blank">
+            <source>transaction.description.not_blank</source>
+            <target>The transaction description should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.min_length">
+            <source>transaction.description.min_length</source>
+            <target>The transaction description must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.max_length">
+            <source>transaction.description.max_length</source>
+            <target>The transaction description cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="transaction.type.not_blank">
+            <source>transaction.type.not_blank</source>
+            <target>The transaction type should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="transaction.type.invalid_choice">
+            <source>transaction.type.invalid_choice</source>
+            <target>The transaction type is invalid.</target>
+         </trans-unit>
+         <trans-unit id="transaction.date.not_null">
+            <source>transaction.date.not_null</source>
+            <target>The transaction date cannot be null.</target>
+         </trans-unit>
+         <trans-unit id="transaction.date.invalid_type">
+            <source>transaction.date.invalid_type</source>
+            <target>The transaction date must be a valid date.</target>
+         </trans-unit>
+         <trans-unit id="transaction.wallet.not_null">
+            <source>transaction.wallet.not_null</source>
+            <target>The wallet cannot be null.</target>
+         </trans-unit>
+         <trans-unit id="transaction.category.not_null">
+            <source>transaction.category.not_null</source>
+            <target>The category cannot be null.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.not_blank">
+            <source>wallet.title.not_blank</source>
+            <target>The wallet title should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.min_length">
+            <source>wallet.title.min_length</source>
+            <target>The wallet title must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.max_length">
+            <source>wallet.title.max_length</source>
+            <target>The wallet title cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="wallet.description.max_length">
+            <source>wallet.description.max_length</source>
+            <target>The wallet description cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="wallet.balance.not_null">
+            <source>wallet.balance.not_null</source>
+            <target>The wallet balance cannot be null.</target>
+         </trans-unit>
+         <trans-unit id="wallet.balance.type">
+            <source>wallet.balance.type</source>
+            <target>The wallet balance must be a number.</target>
+         </trans-unit>
+         <trans-unit id="wallet.created_at.type">
+            <source>wallet.created_at.type</source>
+            <target>The creation date must be a valid date.</target>
+         </trans-unit>
+         <trans-unit id="wallet.updated_at.type">
+            <source>wallet.updated_at.type</source>
+            <target>The update date must be a valid date.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.type">
+            <source>wallet.slug.type</source>
+            <target>The slug must be a valid string.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.min_length">
+            <source>wallet.slug.min_length</source>
+            <target>The slug must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.max_length">
+            <source>wallet.slug.max_length</source>
+            <target>The slug cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.not_blank">
+            <source>tag.title.not_blank</source>
+            <target>The tag title should not be blank.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.min_length">
+            <source>tag.title.min_length</source>
+            <target>The tag title must be at least {{ limit }} characters long.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.max_length">
+            <source>tag.title.max_length</source>
+            <target>The tag title cannot be longer than {{ limit }} characters.</target>
+         </trans-unit>
+      </body>
+   </file>
 </xliff>

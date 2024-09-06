@@ -458,6 +458,34 @@
             <source>message.registration_success</source>
             <target>Rejestracja zakończona sukcesem</target>
         </trans-unit>
+      <trans-unit id="message.category_contains_transactions">
+        <source>message.category_contains_transactions</source>
+        <target>Kategoria zawiera transakcje i nie może zostać usunięta.</target>
+      </trans-unit>
+      <trans-unit id="message.user_not_found">
+        <source>message.user_not_found</source>
+        <target>Użytkownik nie znaleziony.</target>
+      </trans-unit>
+      <trans-unit id="message.delete_failed">
+        <source>message.delete_failed</source>
+        <target>Nie udało się usunąć elementu.</target>
+      </trans-unit>
+      <trans-unit id="title.category_create">
+        <source>title.category_create</source>
+        <target>Utwórz kategorię</target>
+      </trans-unit>
+      <trans-unit id="title.access_denied">
+        <source>title.access_denied</source>
+        <target>Brak dostępu</target>
+      </trans-unit>
+      <trans-unit id="title.user_edit">
+        <source>title.user_edit</source>
+        <target>Edytuj użytkownika</target>
+      </trans-unit>
+      <trans-unit id="message.tag_not_found">
+        <source>message.tag_not_found</source>
+        <target>Tag nie znaleziony.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

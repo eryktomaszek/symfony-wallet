@@ -1,15 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="pl" target-language="pl" datatype="plaintext" original="messages">
-    <body>
-      <trans-unit id="wallet.balance_error">
-        <source>wallet.balance_error</source>
-        <target>Saldo portfela musi być większe lub równe zero.</target>
-      </trans-unit>
-      <trans-unit id="transaction.amount.positive">
-                    <source>transaction.amount.positive</source>
-                    <target>Saldo portfela zbyt niskie.</target>
-                  </trans-unit>
-    </body>
-  </file>
+   <file source-language="pl" target-language="pl" datatype="plaintext" original="messages">
+      <body>
+         <trans-unit id="wallet.balance_error">
+            <source>wallet.balance_error</source>
+            <target>Saldo portfela musi być większe lub równe zero.</target>
+         </trans-unit>
+         <trans-unit id="transaction.amount.positive">
+            <source>transaction.amount.positive</source>
+            <target>Saldo portfela zbyt niskie.</target>
+         </trans-unit>
+         <trans-unit id="Please enter an email">
+            <source>Please enter an email</source>
+            <target>Proszę wprowadzić email.</target>
+         </trans-unit>
+         <trans-unit id="The email is not a valid email.">
+            <source>The email is not a valid email.</source>
+            <target>Email nie jest prawidłowy.</target>
+         </trans-unit>
+         <trans-unit id="Please enter a password">
+            <source>Please enter a password</source>
+            <target>Proszę wprowadzić hasło.</target>
+         </trans-unit>
+         <trans-unit id="Your password should be at least {{ limit }} characters">
+            <source>Your password should be at least {{ limit }} characters</source>
+            <target>Twoje hasło musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="password.current.not_blank">
+            <source>password.current.not_blank</source>
+            <target>Obecne hasło nie może być puste.</target>
+         </trans-unit>
+         <trans-unit id="password.new.not_blank">
+            <source>password.new.not_blank</source>
+            <target>Nowe hasło nie może być puste.</target>
+         </trans-unit>
+         <trans-unit id="password.new.min_length">
+            <source>password.new.min_length</source>
+            <target>Nowe hasło musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="password.confirm.not_blank">
+            <source>password.confirm.not_blank</source>
+            <target>Potwierdzenie hasła nie może być puste.</target>
+         </trans-unit>
+         <trans-unit id="category.name.unique">
+            <source>category.name.unique</source>
+            <target>Nazwa kategorii musi być unikalna.</target>
+         </trans-unit>
+         <trans-unit id="category.name.type">
+            <source>category.name.type</source>
+            <target>Nazwa kategorii musi być prawidłowym ciągiem znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.name.not_blank">
+            <source>category.name.not_blank</source>
+            <target>Nazwa kategorii nie może być pusta.</target>
+         </trans-unit>
+         <trans-unit id="category.name.min_length">
+            <source>category.name.min_length</source>
+            <target>Nazwa kategorii musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.name.max_length">
+            <source>category.name.max_length</source>
+            <target>Nazwa kategorii nie może być dłuższa niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.description.type">
+            <source>category.description.type</source>
+            <target>Opis kategorii musi być prawidłowym ciągiem znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.description.max_length">
+            <source>category.description.max_length</source>
+            <target>Opis kategorii nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.created_at.type">
+            <source>category.created_at.type</source>
+            <target>Data utworzenia musi być prawidłową datą.</target>
+         </trans-unit>
+         <trans-unit id="category.updated_at.type">
+            <source>category.updated_at.type</source>
+            <target>Data aktualizacji musi być prawidłową datą.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.type">
+            <source>category.slug.type</source>
+            <target>Slug musi być prawidłowym ciągiem znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.min_length">
+            <source>category.slug.min_length</source>
+            <target>Slug musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="category.slug.max_length">
+            <source>category.slug.max_length</source>
+            <target>Slug nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="transaction.amount.not_null">
+            <source>transaction.amount.not_null</source>
+            <target>Proszę podać kwotę.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.not_blank">
+            <source>transaction.description.not_blank</source>
+            <target>Opis transakcji nie może być pusty.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.min_length">
+            <source>transaction.description.min_length</source>
+            <target>Opis transakcji musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="transaction.description.max_length">
+            <source>transaction.description.max_length</source>
+            <target>Opis transakcji nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="transaction.type.not_blank">
+            <source>transaction.type.not_blank</source>
+            <target>Typ transakcji nie może być pusty.</target>
+         </trans-unit>
+         <trans-unit id="transaction.type.invalid_choice">
+            <source>transaction.type.invalid_choice</source>
+            <target>Typ transakcji jest nieprawidłowy.</target>
+         </trans-unit>
+         <trans-unit id="transaction.date.not_null">
+            <source>transaction.date.not_null</source>
+            <target>Data transakcji nie może być pusta.</target>
+         </trans-unit>
+         <trans-unit id="transaction.date.invalid_type">
+            <source>transaction.date.invalid_type</source>
+            <target>Data transakcji musi być prawidłową datą.</target>
+         </trans-unit>
+         <trans-unit id="transaction.wallet.not_null">
+            <source>transaction.wallet.not_null</source>
+            <target>Portfel nie może być pusty.</target>
+         </trans-unit>
+         <trans-unit id="transaction.category.not_null">
+            <source>transaction.category.not_null</source>
+            <target>Kategoria nie może być pusta.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.not_blank">
+            <source>wallet.title.not_blank</source>
+            <target>Tytuł portfela nie może być pusty.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.min_length">
+            <source>wallet.title.min_length</source>
+            <target>Tytuł portfela musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="wallet.title.max_length">
+            <source>wallet.title.max_length</source>
+            <target>Tytuł portfela nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="wallet.description.max_length">
+            <source>wallet.description.max_length</source>
+            <target>Opis portfela nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="wallet.balance.not_null">
+            <source>wallet.balance.not_null</source>
+            <target>Saldo portfela nie może być puste.</target>
+         </trans-unit>
+         <trans-unit id="wallet.balance.type">
+            <source>wallet.balance.type</source>
+            <target>Saldo portfela musi być liczbą.</target>
+         </trans-unit>
+         <trans-unit id="wallet.created_at.type">
+            <source>wallet.created_at.type</source>
+            <target>Data utworzenia musi być prawidłową datą.</target>
+         </trans-unit>
+         <trans-unit id="wallet.updated_at.type">
+            <source>wallet.updated_at.type</source>
+            <target>Data aktualizacji musi być prawidłową datą.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.type">
+            <source>wallet.slug.type</source>
+            <target>Slug musi być prawidłowym ciągiem znaków.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.min_length">
+            <source>wallet.slug.min_length</source>
+            <target>Slug musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="wallet.slug.max_length">
+            <source>wallet.slug.max_length</source>
+            <target>Slug nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.not_blank">
+            <source>tag.title.not_blank</source>
+            <target>Tytuł tagu nie może być pusty.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.min_length">
+            <source>tag.title.min_length</source>
+            <target>Tytuł tagu musi mieć co najmniej {{ limit }} znaków.</target>
+         </trans-unit>
+         <trans-unit id="tag.title.max_length">
+            <source>tag.title.max_length</source>
+            <target>Tytuł tagu nie może być dłuższy niż {{ limit }} znaków.</target>
+         </trans-unit>
+      </body>
+   </file>
 </xliff>
