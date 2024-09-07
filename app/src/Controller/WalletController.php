@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -38,8 +37,7 @@ class WalletController extends AbstractController
     /**
      * Index action.
      *
-     * @param Request $request HTTP Request
-     * @param int     $page    Current page number for pagination
+     * @param int $page Current page number for pagination
      *
      * @return Response HTTP response
      */
@@ -64,7 +62,7 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
+    #[ParamConverter('wallet', class: Wallet::class)]
     public function show(Wallet $wallet): Response
     {
         return $this->render('wallet/show.html.twig', ['wallet' => $wallet]);
@@ -115,7 +113,7 @@ class WalletController extends AbstractController
      * @return Response HTTP response
      */
     #[\Symfony\Component\Routing\Attribute\Route('/{id}/edit', name: 'wallet_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
+    #[ParamConverter('wallet', class: Wallet::class)]
     public function edit(Request $request, Wallet $wallet): Response
     {
         $form = $this->createForm(WalletType::class, $wallet);
@@ -152,7 +150,7 @@ class WalletController extends AbstractController
      * @return Response HTTP response
      */
     #[\Symfony\Component\Routing\Attribute\Route('/{id}/delete', name: 'wallet_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
-    #[ParamConverter('wallet', class: \App\Entity\Wallet::class)]
+    #[ParamConverter('wallet', class: Wallet::class)]
     public function delete(Request $request, Wallet $wallet): Response
     {
         if ($this->isCsrfTokenValid('delete'.$wallet->getId(), $request->request->get('_token'))) {
