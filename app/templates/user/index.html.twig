@@ -5,8 +5,6 @@
 {% block body %}
     <h1>{{ 'title.user_list'|trans }}</h1>
 
-    <a href="{{ path('user_create') }}" class="btn btn-primary mb-3">{{ 'title.create_user'|trans }}</a>
-
     {% if pagination|length > 0 %}
         <table class="table">
             <thead>

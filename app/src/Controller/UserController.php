@@ -72,37 +72,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * Create action.
-     *
-     * Handles the creation of a new user.
-     *
-     * @param Request                $request       HTTP Request object
-     * @param EntityManagerInterface $entityManager Entity Manager for persisting data
-     *
-     * @return Response HTTP response object
-     */
-    #[\Symfony\Component\Routing\Attribute\Route('/create', name: 'user_create', methods: 'GET|POST')]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->userService->save($user);
-
-            $this->addFlash('success', $this->translator->trans('message.created_successfully'));
-
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render('user/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * Edit action.
      *
      * Handles editing an existing user, including password changes.
