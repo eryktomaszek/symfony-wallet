@@ -102,16 +102,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <!-- Ensure jQuery is loaded -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Ensure Bootstrap JS is loaded -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Include Bootstrap Select JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
-
-    <!-- Initialize Bootstrap Select -->
     <script>
         $(document).ready(function() {
             $('.selectpicker').selectpicker();

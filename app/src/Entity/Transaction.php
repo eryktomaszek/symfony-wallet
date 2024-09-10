@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Transaction.
+ *
+ * Entity representing a financial transaction within a wallet.
  */
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
