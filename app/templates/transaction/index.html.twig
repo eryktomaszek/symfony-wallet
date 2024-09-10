@@ -26,7 +26,6 @@
                 </select>
             </label>
             <label>
-                <!-- Use the selectpicker class here for Bootstrap Select -->
                 <select name="tags[]" class="form-control selectpicker" multiple data-style="btn-primary" data-actions-box="true" data-live-search="true">
                     {% for tag in tags %}
                         <option value="{{ tag.id }}" {{ selectedTags is defined and tag.id in selectedTags ? 'selected' : '' }}>{{ tag.title }}</option>
@@ -115,7 +114,6 @@
     <!-- Initialize Bootstrap Select -->
     <script>
         $(document).ready(function() {
-            // Initialize only the select elements with class 'selectpicker'
             $('.selectpicker').selectpicker();
         });
     </script>

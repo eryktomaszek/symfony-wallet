@@ -53,4 +53,13 @@ interface CategoryServiceInterface
      * @return array<Category> List of categories
      */
     public function getAllCategories(): array;
+
+    /**
+     * Get category ID.
+     *
+     * @param int $id category ID
+     *
+     * @return Category|null
+     */
+    public function find(int $id): ?Category;
 }

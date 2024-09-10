@@ -101,4 +101,17 @@ class CategoryService implements CategoryServiceInterface
     {
         return $this->categoryRepository->findAll();
     }
+
+    /**
+     * Return ID of a category
+     *
+     * @param int $id
+     *
+     * @return Category|null
+     */
+    public function find(int $id): ?Category
+    {
+        return $this->categoryRepository->find($id);
+    }
+
 }

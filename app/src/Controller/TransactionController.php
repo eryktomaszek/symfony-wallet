@@ -63,7 +63,7 @@ class TransactionController extends AbstractController
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
         $categoryId = $request->query->get('categoryId');
-        $selectedCategory = $categoryId ? $this->categoryService->getAllCategories()[$categoryId] ?? null : null;
+        $selectedCategory = $categoryId ? $this->categoryService->find($categoryId) : null;
         $tags = $request->query->all('tags');
 
         $pagination = $this->transactionService->getPaginatedList(
