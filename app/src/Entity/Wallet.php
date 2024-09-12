@@ -99,11 +99,11 @@ class Wallet
     /**
      * Setter for title.
      *
-     * @param string $title Title
+     * @param string|null $title Title
      *
      * @return static
      */
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 

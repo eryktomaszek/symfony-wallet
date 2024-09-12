@@ -71,7 +71,7 @@ class Transaction
     #[Assert\Type(User::class)]
     private ?User $author = null;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'transactions', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinTable(name: 'transaction_tags')]
     private Collection $tags;
 

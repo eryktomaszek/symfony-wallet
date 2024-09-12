@@ -1,0 +1,123 @@
+.
+├── app
+│   ├── composer.json
+│   ├── config
+│   │   ├── packages
+│   │   │   ├── knp_paginator.yaml
+│   │   │   ├── routing.yaml
+│   │   │   ├── security.yaml
+│   │   ├── routes
+│   │   │   ├── framework.yaml
+│   │   │   ├── security.yaml
+│   │   │   └── web_profiler.yaml
+│   │   ├── routes.yaml
+│   │   ├── services
+│   │   │   └── annotations.yaml
+│   │   └── services.yaml
+│   ├── importmap.php
+│   ├── migrations
+│   │   └── Version20240910171238.php
+│   ├── public
+│   │   ├── css
+│   │   │   └── styles.css
+│   │   └── index.php
+│   ├── src
+│   │   ├── Controller
+│   │   │   ├── CategoryController.php
+│   │   │   ├── SecurityController.php
+│   │   │   ├── TagController.php
+│   │   │   ├── TransactionController.php
+│   │   │   ├── UserController.php
+│   │   │   ├── UserSettingsController.php
+│   │   │   └── WalletController.php
+│   │   ├── DataFixtures
+│   │   │   ├── AbstractBaseFixtures.php
+│   │   │   ├── CategoryFixtures.php
+│   │   │   ├── TagFixtures.php
+│   │   │   ├── TransactionFixtures.php
+│   │   │   ├── UserFixtures.php
+│   │   │   └── WalletFixtures.php
+│   │   ├── Entity
+│   │   │   ├── Category.php
+│   │   │   ├── Enum
+│   │   │   │   └── UserRole.php
+│   │   │   ├── Tag.php
+│   │   │   ├── Transaction.php
+│   │   │   ├── User.php
+│   │   │   └── Wallet.php
+│   │   ├── Form
+│   │   │   └── Type
+│   │   │       ├── CategoryType.php
+│   │   │       ├── ChangePasswordType.php
+│   │   │       ├── RegistrationFormType.php
+│   │   │       ├── TagType.php
+│   │   │       ├── TransactionType.php
+│   │   │       ├── UserType.php
+│   │   │       └── WalletType.php
+│   │   ├── Kernel.php
+│   │   ├── Repository
+│   │   │   ├── CategoryRepository.php
+│   │   │   ├── TagRepository.php
+│   │   │   ├── TransactionRepository.php
+│   │   │   ├── UserRepository.php
+│   │   │   └── WalletRepository.php
+│   │   ├── Security
+│   │   │   ├── LoginFormAuthenticator.php
+│   │   │   └── Voter
+│   │   │       └── TransactionVoter.php
+│   │   └── Service
+│   │       ├── CategoryService.php
+│   │       ├── CategoryServiceInterface.php
+│   │       ├── RegistrationService.php
+│   │       ├── RegistrationServiceInterface.php
+│   │       ├── TagService.php
+│   │       ├── TagServiceInterface.php
+│   │       ├── TransactionService.php
+│   │       ├── TransactionServiceInterface.php
+│   │       ├── UserService.php
+│   │       ├── UserServiceInterface.php
+│   │       ├── WalletService.php
+│   │       └── WalletServiceInterface.php
+│   ├── symfony.lock
+│   ├── templates
+│   │   ├── base.html.twig
+│   │   ├── category
+│   │   │   ├── create.html.twig
+│   │   │   ├── edit.html.twig
+│   │   │   ├── index.html.twig
+│   │   │   └── show.html.twig
+│   │   ├── default
+│   │   │   ├── _flash_messages.html.twig
+│   │   │   ├── _form.html.twig
+│   │   │   └── _single_alert_message.html.twig
+│   │   ├── security
+│   │   │   ├── access_denied.html.twig
+│   │   │   ├── login.html.twig
+│   │   │   └── register.html.twig
+│   │   ├── tag
+│   │   │   ├── create.html.twig
+│   │   │   ├── edit.html.twig
+│   │   │   ├── index.html.twig
+│   │   │   └── show.html.twig
+│   │   ├── transaction
+│   │   │   ├── create.html.twig
+│   │   │   ├── edit.html.twig
+│   │   │   ├── index.html.twig
+│   │   │   └── show.html.twig
+│   │   ├── user
+│   │   │   ├── edit.html.twig
+│   │   │   ├── index.html.twig
+│   │   │   ├── settings.html.twig
+│   │   │   └── show.html.twig
+│   │   └── wallet
+│   │       ├── create.html.twig
+│   │       ├── edit.html.twig
+│   │       ├── index.html.twig
+│   │       └── show.html.twig
+│   ├── tests
+│   │   └── bootstrap.php
+│   ├── translations
+│   │   ├── messages.en.xlf
+│   │   ├── messages.pl.xlf
+│   │   ├── validators.en.xlf
+│   │   └── validators.pl.xlf

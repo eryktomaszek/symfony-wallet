@@ -26,12 +26,19 @@
                 </select>
             </label>
             <label>
-                <select name="tags[]" class="form-control selectpicker" multiple data-style="btn-primary" data-actions-box="true" data-live-search="true">
+                <select name="tags[]" class="form-control selectpicker" multiple
+                        data-style="btn-primary"
+                        data-actions-box="true"
+                        data-live-search="true"
+                        data-none-selected-text="{{ 'selectpicker.nothing_selected'|trans }}"
+                        data-deselect-all-text="{{ 'selectpicker.deselect_all'|trans }}"
+                        data-select-all-text="{{ 'selectpicker.select_all'|trans }}">
                     {% for tag in tags %}
                         <option value="{{ tag.id }}" {{ selectedTags is defined and tag.id in selectedTags ? 'selected' : '' }}>{{ tag.title }}</option>
                     {% endfor %}
                 </select>
             </label>
+
         </div>
         <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
     </form>

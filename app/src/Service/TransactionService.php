@@ -33,12 +33,9 @@ class TransactionService implements TransactionServiceInterface
      * @param ValidatorInterface    $validator             Validator
      * @param TranslatorInterface   $translator            Translator
      */
-    public function __construct(
-        private readonly TransactionRepository $transactionRepository,
-        private readonly PaginatorInterface $paginator,
-        private readonly ValidatorInterface $validator,
-        private readonly TranslatorInterface $translator
-    ) {}
+    public function __construct(private readonly TransactionRepository $transactionRepository, private readonly PaginatorInterface $paginator, private readonly ValidatorInterface $validator, private readonly TranslatorInterface $translator)
+    {
+    }
 
     /**
      * Get paginated list of transactions for a user.

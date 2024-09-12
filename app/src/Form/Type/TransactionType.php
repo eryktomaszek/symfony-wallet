@@ -22,19 +22,22 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class TransactionType.
  */
 class TransactionType extends AbstractType
 {
+    private TranslatorInterface $translator;
     /**
      * Constructor.
      *
      * @param Security $security Security service
      */
-    public function __construct(private readonly Security $security)
+    public function __construct(private readonly Security $security, TranslatorInterface $translator)
     {
+        $this->translator = $translator;
     }
 
     /**
@@ -57,8 +60,8 @@ class TransactionType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => 'label.type',
                 'choices' => [
-                    'Income' => 'income',
-                    'Expense' => 'expense',
+                    $this->translator->trans('label.income') => 'income',
+                    $this->translator->trans('label.expense') => 'expense',
                 ],
                 'required' => true,
             ])

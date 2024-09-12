@@ -15,9 +15,9 @@
             <dt>{{ 'label.slug'|trans }}</dt>
             <dd>{{ tag.slug }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ tag.createdAt|date('Y/m/d H:i:s') }}</dd>
+            <dd>{{ tag.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ tag.updatedAt|date('Y/m/d H:i:s') }}</dd>
+            <dd>{{ tag.updatedAt|format_date('long') }}</dd>
         </dl>
         <p>
             <a href="{{ path('tag_index') }}" class="btn btn-secondary">

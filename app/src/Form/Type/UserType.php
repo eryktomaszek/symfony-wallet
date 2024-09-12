@@ -61,6 +61,7 @@ class UserType extends AbstractType
                 ],
                 'second_options' => ['label' => 'label.repeat_password'],
                 'mapped' => false,
+                'label' => false,
             ]);
     }
 

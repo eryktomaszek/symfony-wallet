@@ -17,9 +17,9 @@
             <dt>{{ 'label.balance'|trans }}</dt>
             <dd>{{ wallet.balance }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ wallet.createdAt|date('Y/m/d H:i:s') }}</dd>
+            <dd>{{ wallet.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ wallet.updatedAt|date('Y/m/d H:i:s') }}</dd>
+            <dd>{{ wallet.updatedAt|format_date('long') }}</dd>
         </dl>
         <p>
             <a href="{{ path('wallet_index') }}" class="btn btn-secondary">

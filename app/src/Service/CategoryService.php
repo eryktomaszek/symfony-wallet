@@ -113,5 +113,4 @@ class CategoryService implements CategoryServiceInterface
     {
         return $this->categoryRepository->find($id);
     }
-
 }

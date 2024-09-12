@@ -486,6 +486,26 @@
         <source>message.tag_not_found</source>
         <target>Tag nie znaleziony.</target>
       </trans-unit>
+      <trans-unit id="selectpicker.select_all">
+          <source>selectpicker.select_all</source>
+          <target>Zaznacz wszystkie</target>
+      </trans-unit>
+      <trans-unit id="selectpicker.deselect_all">
+          <source>selectpicker.deselect_all</source>
+          <target>Odznacz wszystkie</target>
+      </trans-unit>
+      <trans-unit id="selectpicker.nothing_selected">
+          <source>selectpicker.nothing_selected</source>
+          <target>Nic nie wybrano</target>
+      </trans-unit>
+      <trans-unit id="label.income">
+          <source>label.income</source>
+          <target>Przychód</target>
+      </trans-unit>
+      <trans-unit id="label.expense">
+          <source>label.expense</source>
+          <target>Wydatek</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
