@@ -9,6 +9,7 @@ namespace App\Service;
 
 use App\Entity\Transaction;
 use App\Entity\User;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -43,4 +44,17 @@ interface TransactionServiceInterface
      * @param Transaction $transaction The transaction entity to delete
      */
     public function delete(Transaction $transaction): void;
+
+    /**
+     * Get a filtered query for transactions based on user, category, tags, start date, and end date.
+     *
+     * @param User                    $user       The user to filter transactions by
+     * @param int|null                $categoryId The category ID to filter by (optional)
+     * @param array                   $tags       The list of tag IDs to filter by (optional)
+     * @param \DateTimeInterface|null $startDate  The start date filter (optional)
+     * @param \DateTimeInterface|null $endDate    The end date filter (optional)
+     *
+     * @return QueryBuilder The query builder for filtered transactions
+     */
+    public function getFilteredTransactionsQuery(User $user, ?int $categoryId = null, array $tags = [], ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): QueryBuilder;
 }

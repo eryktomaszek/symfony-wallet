@@ -101,4 +101,10 @@ class TransactionService implements TransactionServiceInterface
 
         $this->transactionRepository->remove($transaction, true);
     }
+
+    public function getFilteredTransactionsQuery(User $user, ?int $categoryId = null, array $tags = [], ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->transactionRepository->findByFiltersQuery($user, $categoryId, $tags, $startDate, $endDate);
+    }
+
 }

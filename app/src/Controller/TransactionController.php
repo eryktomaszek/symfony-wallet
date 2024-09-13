@@ -13,6 +13,7 @@ use App\Form\Type\TransactionType;
 use App\Service\CategoryServiceInterface;
 use App\Service\TagServiceInterface;
 use App\Service\TransactionServiceInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,42 +51,48 @@ class TransactionController extends AbstractController
      * @throws \DateMalformedStringException
      */
     #[\Symfony\Component\Routing\Attribute\Route(name: 'transaction_index', methods: 'GET')]
-    public function index(Request $request): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         if (!$user instanceof User) {
             $this->addFlash('error', $this->translator->trans('message.user_not_found'));
-
             return $this->redirectToRoute('app_login');
         }
 
+        // Get filters from the request
+        $categoryId = $request->query->get('categoryId');
+        $categoryId = !empty($categoryId) ? (int) $categoryId : null;
+
+        $tags = $request->query->all('tags');
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
-        $categoryId = $request->query->get('categoryId');
-        $selectedCategory = $categoryId ? $this->categoryService->find($categoryId) : null;
-        $tags = $request->query->all('tags');
 
-        $pagination = $this->transactionService->getPaginatedList(
-            $request->query->getInt('page', 1),
-            $user,
-            $startDate,
-            $endDate,
-            $selectedCategory,
-            $tags
+        // Call the service to get filtered transactions
+        $transactionsQuery = $this->transactionService->getFilteredTransactionsQuery(
+            $user, $categoryId, $tags, $startDate, $endDate
         );
 
+        // Handle pagination
+        $pagination = $paginator->paginate(
+            $transactionsQuery, // Doctrine QueryBuilder object
+            $request->query->getInt('page', 1), // Current page number
+            10 // Number of results per page
+        );
+
+        // Fetch categories and tags for the filter dropdowns
         $categories = $this->categoryService->getAllCategories();
         $allTags = $this->tagService->getAllTags();
 
         return $this->render('transaction/index.html.twig', [
-            'pagination' => $pagination,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
+            'pagination' => $pagination, // Paginated transactions
             'categories' => $categories,
             'selectedCategoryId' => $categoryId,
             'tags' => $allTags,
             'selectedTags' => $tags,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 

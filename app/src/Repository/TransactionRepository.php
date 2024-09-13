@@ -128,11 +128,46 @@ class TransactionRepository extends ServiceEntityRepository
                 ->setParameter('category', $category);
         }
 
-        if ([] !== $tags) {
+        if (!empty($tags)) {
             $qb->andWhere('tags.id IN (:tags)')
                 ->setParameter('tags', $tags);
         }
 
         return $qb;
     }
+
+    public function findByFiltersQuery(User $user, ?int $categoryId = null, array $tags = [], ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('transaction')
+            ->andWhere('transaction.author = :author')
+            ->setParameter('author', $user);
+
+        // Filter by category if provided
+        if ($categoryId) {
+            $qb->andWhere('transaction.category = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+
+        // Filter by tags if provided
+        if (!empty($tags)) {
+            $qb->join('transaction.tags', 't')
+                ->andWhere('t.id IN (:tags)')
+                ->setParameter('tags', $tags);
+        }
+
+        // Filter by start date if provided
+        if ($startDate instanceof \DateTimeInterface) {
+            $qb->andWhere('transaction.date >= :startDate')
+                ->setParameter('startDate', $startDate->format('Y-m-d'));
+        }
+
+        // Filter by end date if provided
+        if ($endDate instanceof \DateTimeInterface) {
+            $qb->andWhere('transaction.date <= :endDate')
+                ->setParameter('endDate', $endDate->format('Y-m-d 23:59:59'));
+        }
+
+        return $qb;
+    }
+
 }
