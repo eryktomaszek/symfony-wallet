@@ -103,11 +103,11 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * Return ID of a category
+     * Return ID of a category.
      *
-     * @param int $id
+     * @param int $id the ID of the category to find
      *
-     * @return Category|null
+     * @return Category|null the found Category entity or null if not found
      */
     public function find(int $id): ?Category
     {

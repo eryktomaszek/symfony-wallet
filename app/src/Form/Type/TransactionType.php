@@ -29,17 +29,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TransactionType extends AbstractType
 {
-    private TranslatorInterface $translator;
-
     /**
      * Constructor.
      *
      * @param Security            $security   Security service
      * @param TranslatorInterface $translator Translator service
      */
-    public function __construct(private readonly Security $security, TranslatorInterface $translator)
+    public function __construct(private readonly Security $security, private readonly TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

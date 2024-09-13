@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -58,7 +57,7 @@ class TagController extends AbstractController
      * @return Response HTTP response
      */
     #[\Symfony\Component\Routing\Attribute\Route('/{id}', name: 'tag_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
-    #[ParamConverter('tag', class: \App\Entity\Tag::class)]
+    #[ParamConverter('tag', class: Tag::class)]
     public function show(Tag $tag): Response
     {
         return $this->render('tag/show.html.twig', ['tag' => $tag]);
@@ -103,7 +102,7 @@ class TagController extends AbstractController
      * @return Response HTTP response
      */
     #[\Symfony\Component\Routing\Attribute\Route('/{id}/edit', name: 'tag_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[ParamConverter('tag', class: \App\Entity\Tag::class)]
+    #[ParamConverter('tag', class: Tag::class)]
     public function edit(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(TagType::class, $tag);
@@ -134,7 +133,7 @@ class TagController extends AbstractController
      * @return Response HTTP response
      */
     #[\Symfony\Component\Routing\Attribute\Route('/{id}/delete', name: 'tag_delete', requirements: ['id' => '[1-9]\d*'], methods: 'POST')]
-    #[ParamConverter('tag', class: \App\Entity\Tag::class)]
+    #[ParamConverter('tag', class: Tag::class)]
     public function delete(Request $request, Tag $tag): Response
     {
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {

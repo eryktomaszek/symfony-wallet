@@ -17,7 +17,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -64,7 +63,7 @@ class TransactionController extends AbstractController
         }
 
         $categoryId = $request->query->get('categoryId');
-        $categoryId = !empty($categoryId) ? (int) $categoryId : null;
+        $categoryId = empty($categoryId) ? null : (int) $categoryId;
 
         $tags = $request->query->all('tags');
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;

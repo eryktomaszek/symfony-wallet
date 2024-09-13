@@ -128,7 +128,7 @@ class TransactionRepository extends ServiceEntityRepository
                 ->setParameter('category', $category);
         }
 
-        if (!empty($tags)) {
+        if ([] !== $tags) {
             $qb->andWhere('tags.id IN (:tags)')
                 ->setParameter('tags', $tags);
         }
@@ -162,7 +162,7 @@ class TransactionRepository extends ServiceEntityRepository
                 ->setParameter('categoryId', $categoryId);
         }
 
-        if (!empty($tags)) {
+        if ([] !== $tags) {
             $qb->join('transaction.tags', 't')
                 ->andWhere('t.id IN (:tags)')
                 ->setParameter('tags', $tags);

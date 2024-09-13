@@ -58,8 +58,6 @@ interface CategoryServiceInterface
      * Get category ID.
      *
      * @param int $id category ID
-     *
-     * @return Category|null
      */
     public function find(int $id): ?Category;
 }
