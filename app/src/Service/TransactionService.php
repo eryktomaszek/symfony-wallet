@@ -102,9 +102,22 @@ class TransactionService implements TransactionServiceInterface
         $this->transactionRepository->remove($transaction, true);
     }
 
+    /**
+     * Retrieves a QueryBuilder for filtered transactions based on the provided user, category, tags, start date, and end date.
+     *
+     * This method calls the transaction repository to build a query that filters transactions for a specific user.
+     * Optional filters such as category, tags, start date, and end date can be applied.
+     *
+     * @param User                    $user       the user for whom the transactions are being filtered
+     * @param int|null                $categoryId the optional category ID to filter transactions by
+     * @param array                   $tags       an optional array of tag IDs to filter transactions by
+     * @param \DateTimeInterface|null $startDate  the optional start date to filter transactions from
+     * @param \DateTimeInterface|null $endDate    the optional end date to filter transactions up to
+     *
+     * @return \Doctrine\ORM\QueryBuilder the QueryBuilder object with the constructed query for filtered transactions
+     */
     public function getFilteredTransactionsQuery(User $user, ?int $categoryId = null, array $tags = [], ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): \Doctrine\ORM\QueryBuilder
     {
         return $this->transactionRepository->findByFiltersQuery($user, $categoryId, $tags, $startDate, $endDate);
     }
-
 }

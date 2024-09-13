@@ -506,6 +506,18 @@
           <source>label.expense</source>
           <target>Wydatek</target>
       </trans-unit>
+      <trans-unit id="label.transactions">
+          <source>label.transactions</source>
+          <target>Transakcje</target>
+      </trans-unit>
+      <trans-unit id="label.wallets">
+          <source>label.wallets</source>
+          <target>Portfele</target>
+      </trans-unit>
+      <trans-unit id="label.categories">
+          <source>label.categories</source>
+          <target>Kategorie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

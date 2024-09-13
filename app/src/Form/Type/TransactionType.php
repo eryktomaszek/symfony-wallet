@@ -7,10 +7,10 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Transaction;
 use App\Entity\Category;
-use App\Entity\Wallet;
 use App\Entity\Tag;
+use App\Entity\Transaction;
+use App\Entity\Wallet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,10 +30,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TransactionType extends AbstractType
 {
     private TranslatorInterface $translator;
+
     /**
      * Constructor.
      *
-     * @param Security $security Security service
+     * @param Security            $security   Security service
+     * @param TranslatorInterface $translator Translator service
      */
     public function __construct(private readonly Security $security, TranslatorInterface $translator)
     {

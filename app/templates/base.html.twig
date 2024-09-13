@@ -24,12 +24,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="mx-auto d-flex justify-content-center gap-3">
                 {% if is_granted('ROLE_USER') %}
-                    <a class="btn btn-link nav-link" href="{{ path('transaction_index') }}">Transactions</a>
-                    <a class="btn btn-link nav-link" href="{{ path('wallet_index') }}">Wallets</a>
+                    <a class="btn btn-link nav-link" href="{{ path('transaction_index') }}">{{ 'label.transactions'|trans }}</a>
+                    <a class="btn btn-link nav-link" href="{{ path('wallet_index') }}">{{ 'label.wallets'|trans }}</a>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-link nav-link" href="{{ path('category_index') }}">Categories</a>
-                    <a class="btn btn-link nav-link" href="{{ path('tag_index') }}">Tags</a>
+                    <a class="btn btn-link nav-link" href="{{ path('category_index') }}">{{ 'label.categories'|trans }}</a>
+                    <a class="btn btn-link nav-link" href="{{ path('tag_index') }}">{{ 'label.tags'|trans }}</a>
                 {% endif %}
             </div>
             <ul class="navbar-nav ms-auto">

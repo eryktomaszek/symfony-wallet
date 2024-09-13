@@ -44,7 +44,8 @@ class TransactionController extends AbstractController
     /**
      * Index action - displays a paginated list of transactions for the current user.
      *
-     * @param Request $request HTTP Request object
+     * @param Request            $request   HTTP Request object
+     * @param PaginatorInterface $paginator Pagination mechanism
      *
      * @return Response HTTP Response object
      *
@@ -58,10 +59,10 @@ class TransactionController extends AbstractController
 
         if (!$user instanceof User) {
             $this->addFlash('error', $this->translator->trans('message.user_not_found'));
+
             return $this->redirectToRoute('app_login');
         }
 
-        // Get filters from the request
         $categoryId = $request->query->get('categoryId');
         $categoryId = !empty($categoryId) ? (int) $categoryId : null;
 
@@ -69,19 +70,20 @@ class TransactionController extends AbstractController
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
 
-        // Call the service to get filtered transactions
         $transactionsQuery = $this->transactionService->getFilteredTransactionsQuery(
-            $user, $categoryId, $tags, $startDate, $endDate
+            $user,
+            $categoryId,
+            $tags,
+            $startDate,
+            $endDate
         );
 
-        // Handle pagination
         $pagination = $paginator->paginate(
-            $transactionsQuery, // Doctrine QueryBuilder object
-            $request->query->getInt('page', 1), // Current page number
-            10 // Number of results per page
+            $transactionsQuery,
+            $request->query->getInt('page', 1),
+            10
         );
 
-        // Fetch categories and tags for the filter dropdowns
         $categories = $this->categoryService->getAllCategories();
         $allTags = $this->tagService->getAllTags();
 

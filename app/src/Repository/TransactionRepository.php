@@ -136,32 +136,43 @@ class TransactionRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    /**
+     * Retrieves a QueryBuilder for filtering transactions based on the user, category, tags, start date, and end date.
+     *
+     * This method constructs a Doctrine QueryBuilder to filter transactions for a given user. Optional filters for category,
+     * tags, start date, and end date are applied if provided. If no filters are provided, all transactions for the user
+     * are returned.
+     *
+     * @param User                    $user       the user for whom transactions are being filtered
+     * @param int|null                $categoryId the optional category ID to filter transactions by
+     * @param array                   $tags       an optional array of tag IDs to filter transactions by
+     * @param \DateTimeInterface|null $startDate  the optional start date to filter transactions from
+     * @param \DateTimeInterface|null $endDate    the optional end date to filter transactions up to
+     *
+     * @return QueryBuilder the QueryBuilder object containing the constructed query for filtered transactions
+     */
     public function findByFiltersQuery(User $user, ?int $categoryId = null, array $tags = [], ?\DateTimeInterface $startDate = null, ?\DateTimeInterface $endDate = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('transaction')
             ->andWhere('transaction.author = :author')
             ->setParameter('author', $user);
 
-        // Filter by category if provided
         if ($categoryId) {
             $qb->andWhere('transaction.category = :categoryId')
                 ->setParameter('categoryId', $categoryId);
         }
 
-        // Filter by tags if provided
         if (!empty($tags)) {
             $qb->join('transaction.tags', 't')
                 ->andWhere('t.id IN (:tags)')
                 ->setParameter('tags', $tags);
         }
 
-        // Filter by start date if provided
         if ($startDate instanceof \DateTimeInterface) {
             $qb->andWhere('transaction.date >= :startDate')
                 ->setParameter('startDate', $startDate->format('Y-m-d'));
         }
 
-        // Filter by end date if provided
         if ($endDate instanceof \DateTimeInterface) {
             $qb->andWhere('transaction.date <= :endDate')
                 ->setParameter('endDate', $endDate->format('Y-m-d 23:59:59'));
@@ -169,5 +180,4 @@ class TransactionRepository extends ServiceEntityRepository
 
         return $qb;
     }
-
 }

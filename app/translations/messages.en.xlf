@@ -506,6 +506,18 @@
                       <source>label.expense</source>
                       <target>Expense</target>
                   </trans-unit>
+                  <trans-unit id="label.transactions">
+                      <source>label.transactions</source>
+                      <target>Transactions</target>
+                  </trans-unit>
+                  <trans-unit id="label.wallets">
+                      <source>label.wallets</source>
+                      <target>Wallets</target>
+                  </trans-unit>
+                  <trans-unit id="label.categories">
+                      <source>label.categories</source>
+                      <target>Categories</target>
+                  </trans-unit>
     </body>
   </file>
 </xliff>
