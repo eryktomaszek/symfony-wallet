@@ -14,9 +14,11 @@
             <label>
                 <input type="date" name="startDate" value="{{ startDate ? startDate|date('Y-m-d') }}" class="form-control" placeholder="Start Date"/>
             </label>
+
             <label>
                 <input type="date" name="endDate" value="{{ endDate ? endDate|date('Y-m-d') }}" class="form-control" placeholder="End Date"/>
             </label>
+
             <label>
                 <select name="categoryId" class="form-control">
                     <option value="">{{ 'label.all_categories'|trans }}</option>
@@ -25,6 +27,7 @@
                     {% endfor %}
                 </select>
             </label>
+
             <label>
                 <select name="tags[]" class="form-control selectpicker" multiple data-style="btn-primary" data-live-search="true">
                     {% for tag in tags %}
@@ -33,6 +36,7 @@
                 </select>
             </label>
         </div>
+
         <button type="submit" class="btn btn-secondary">{{ 'action.filter'|trans }}</button>
     </form>
 
@@ -40,12 +44,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">{{ 'label.id'|trans }}</th>
-                <th scope="col">{{ 'label.date'|trans }}</th>
-                <th scope="col">{{ 'label.description'|trans }}</th>
-                <th scope="col">{{ 'label.amount'|trans }}</th>
-                <th scope="col">{{ 'label.category'|trans }}</th>
-                <th scope="col">{{ 'label.tags'|trans }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'transaction.id') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'transaction.date') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'transaction.description') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'transaction.amount') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'transaction.category') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'transaction.tags') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'transaction.author') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.balance_after'|trans, 'transaction.balanceAfter') }}</th>
                 <th scope="col">{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -53,7 +59,7 @@
             {% for transaction in pagination %}
                 <tr>
                     <th scope="row">{{ transaction.id }}</th>
-                    <td>{{ transaction.date|date('Y-m-d') }}</td>
+                    <td>{{ transaction.date|format_date('long') }}</td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td>{{ transaction.category.name }}</td>
@@ -62,6 +68,8 @@
                             {{ tag.title }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
+                    <td>{{ transaction.author.email }}</td>
+                    <td>{{ transaction.balanceAfter }}</td>
                     <td>
                         {% if is_granted('VIEW', transaction) %}
                             <a href="{{ path('transaction_show', {'id': transaction.id}) }}" class="btn btn-info btn-sm">{{ 'action.view'|trans }}</a>
@@ -80,6 +88,7 @@
             {% endfor %}
             </tbody>
         </table>
+
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
