@@ -27,18 +27,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationFormType extends AbstractType
 {
     /**
-     * @var TranslatorInterface The translator service for handling translations in the form.
-     */
-    private TranslatorInterface $translator;
-
-    /**
      * Constructor.
-     *
-     * @param TranslatorInterface $translator The translator service for translating form labels and messages.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct()
     {
-        $this->translator = $translator;
     }
 
     /**
