@@ -518,6 +518,10 @@
           <source>label.categories</source>
           <target>Kategorie</target>
       </trans-unit>
+      <trans-unit id="label.password_repeat">
+          <source>label.password_repeat</source>
+          <target>Powtórz hasło</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

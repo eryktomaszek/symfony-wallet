@@ -186,6 +186,26 @@
             <source>tag.title.max_length</source>
             <target>The tag title cannot be longer than {{ limit }} characters.</target>
          </trans-unit>
+         <trans-unit id="validators.email.not_blank">
+             <source>validators.email.not_blank</source>
+             <target>Please enter an email</target>
+         </trans-unit>
+         <trans-unit id="validators.email.invalid">
+             <source>validators.email.invalid</source>
+             <target>The email is not a valid email.</target>
+         </trans-unit>
+         <trans-unit id="validators.password.not_blank">
+             <source>validators.password.not_blank</source>
+             <target>Please enter a password</target>
+         </trans-unit>
+         <trans-unit id="validators.password.length">
+             <source>validators.password.length</source>
+             <target>Your password should be at least {{ limit }} characters</target>
+         </trans-unit>
+         <trans-unit id="validators.password.mismatch">
+             <source>validators.password.mismatch</source>
+             <target>The password fields must match.</target>
+         </trans-unit>
       </body>
    </file>
 </xliff>

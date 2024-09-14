@@ -50,12 +50,12 @@ class Category
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\Type(\DateTimeImmutable::class, message: 'category.created_at.type')]
+    #[Assert\Type(\DateTimeInterface::class, message: 'category.created_at.type')]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\Type(\DateTimeImmutable::class, message: 'category.updated_at.type')]
+    #[Assert\Type(\DateTimeInterface::class, message: 'category.updated_at.type')]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updatedAt;
 

@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class RegistrationFormType.
@@ -25,6 +26,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * @var TranslatorInterface The translator service for handling translations in the form.
+     */
+    private TranslatorInterface $translator;
+
+    /**
+     * Constructor.
+     *
+     * @param TranslatorInterface $translator The translator service for translating form labels and messages.
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Build the registration form.
      *
@@ -36,22 +52,26 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter an email']),
-                    new Email(['message' => 'The email is not a valid email.']),
+                    new NotBlank(['message' => 'validators.email.not_blank']),
+                    new Email(['message' => 'validators.email.invalid']),
                 ],
+                'label' => 'label.email',
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'attr' => ['class' => 'password-field'],
+                'label' => false,
                 'first_options' => [
+                    'label' => 'label.password',
                     'constraints' => [
-                        new NotBlank(['message' => 'Please enter a password']),
-                        new Length(['min' => 6, 'minMessage' => 'Your password should be at least {{ limit }} characters']),
+                        new NotBlank(['message' => 'validators.password.not_blank']),
+                        new Length(['min' => 6, 'minMessage' => 'validators.password.length']),
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'label.password_repeat',
                 ],
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'validators.password.mismatch',
                 'mapped' => true,
             ]);
     }

@@ -186,6 +186,26 @@
             <source>tag.title.max_length</source>
             <target>Tytuł tagu nie może być dłuższy niż {{ limit }} znaków.</target>
          </trans-unit>
+         <trans-unit id="validators.email.not_blank">
+             <source>validators.email.not_blank</source>
+             <target>Proszę podać adres e-mail</target>
+         </trans-unit>
+         <trans-unit id="validators.email.invalid">
+             <source>validators.email.invalid</source>
+             <target>Podany adres e-mail jest nieprawidłowy.</target>
+         </trans-unit>
+         <trans-unit id="validators.password.not_blank">
+             <source>validators.password.not_blank</source>
+             <target>Proszę podać hasło</target>
+         </trans-unit>
+         <trans-unit id="validators.password.length">
+             <source>validators.password.length</source>
+             <target>Hasło powinno mieć co najmniej {{ limit }} znaków</target>
+         </trans-unit>
+         <trans-unit id="validators.password.mismatch">
+             <source>validators.password.mismatch</source>
+             <target>Pola hasła muszą być zgodne.</target>
+         </trans-unit>
       </body>
    </file>
 </xliff>
