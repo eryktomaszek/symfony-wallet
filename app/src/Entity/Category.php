@@ -106,7 +106,7 @@ class Category
      *
      * @param string $name Name
      *
-     * @return static
+     * @return static The current Category entity
      */
     public function setName(string $name): static
     {
@@ -130,7 +130,7 @@ class Category
      *
      * @param string|null $description Description
      *
-     * @return static
+     * @return static The current Category entity
      */
     public function setDescription(?string $description): static
     {
@@ -154,7 +154,7 @@ class Category
      *
      * @param \DateTimeInterface $createdAt Created at timestamp
      *
-     * @return static
+     * @return static The current Category entity
      */
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
@@ -178,7 +178,7 @@ class Category
      *
      * @param \DateTimeInterface $updatedAt Updated at timestamp
      *
-     * @return static
+     * @return static The current Category entity
      */
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
@@ -202,7 +202,7 @@ class Category
      *
      * @param string $slug Slug
      *
-     * @return static
+     * @return static The current Category entity
      */
     public function setSlug(string $slug): static
     {

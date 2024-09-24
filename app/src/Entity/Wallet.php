@@ -101,7 +101,7 @@ class Wallet
      *
      * @param string|null $title Title
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setTitle(?string $title): static
     {
@@ -125,7 +125,7 @@ class Wallet
      *
      * @param string|null $description Description
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setDescription(?string $description): static
     {
@@ -149,7 +149,7 @@ class Wallet
      *
      * @param float $balance Balance
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setBalance(float $balance): static
     {
@@ -173,7 +173,7 @@ class Wallet
      *
      * @param \DateTimeInterface $createdAt Created at
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
@@ -197,7 +197,7 @@ class Wallet
      *
      * @param \DateTimeInterface $updatedAt Updated at
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
@@ -221,7 +221,7 @@ class Wallet
      *
      * @param string $slug Slug
      *
-     * @return static
+     * @return static The current Wallet entity
      */
     public function setSlug(string $slug): static
     {

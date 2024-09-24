@@ -17,7 +17,7 @@ class TransactionFixtures extends AbstractBaseFixtures implements DependentFixtu
     /**
      * Get the dependencies for this fixture.
      *
-     * @return array
+     * @return array The list of dependent fixture classes
      */
     public function getDependencies(): array
     {

@@ -111,7 +111,7 @@ class Transaction
      *
      * @param float $amount Amount
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setAmount(float $amount): static
     {
@@ -135,7 +135,7 @@ class Transaction
      *
      * @param string $description Description
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setDescription(string $description): static
     {
@@ -159,7 +159,7 @@ class Transaction
      *
      * @param string $type Type
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setType(string $type): static
     {
@@ -183,7 +183,7 @@ class Transaction
      *
      * @param \DateTimeInterface $date Date
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setDate(\DateTimeInterface $date): static
     {
@@ -207,7 +207,7 @@ class Transaction
      *
      * @param Wallet|null $wallet Wallet
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setWallet(?Wallet $wallet): static
     {
@@ -231,7 +231,7 @@ class Transaction
      *
      * @param Category|null $category Category
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setCategory(?Category $category): static
     {
@@ -255,7 +255,7 @@ class Transaction
      *
      * @param Tag $tag Tag entity
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function addTag(Tag $tag): static
     {
@@ -271,7 +271,7 @@ class Transaction
      *
      * @param Tag $tag Tag entity
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function removeTag(Tag $tag): static
     {
@@ -295,7 +295,7 @@ class Transaction
      *
      * @param User|null $author Author
      *
-     * @return static
+     * @return static The current Transaction entity
      */
     public function setAuthor(?User $author): static
     {

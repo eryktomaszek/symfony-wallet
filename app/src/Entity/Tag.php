@@ -71,7 +71,7 @@ class Tag
      *
      * @param string $title Title
      *
-     * @return static
+     * @return static The current Tag entity
      */
     public function setTitle(string $title): static
     {
@@ -95,7 +95,7 @@ class Tag
      *
      * @param string $slug Slug
      *
-     * @return static
+     * @return static The current Tag entity
      */
     public function setSlug(string $slug): static
     {

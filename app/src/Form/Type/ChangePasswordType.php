@@ -72,7 +72,7 @@ class ChangePasswordType extends AbstractType
     /**
      * Get block prefix.
      *
-     * @return string
+     * @return string The block prefix for the form type
      */
     public function getBlockPrefix(): string
     {
